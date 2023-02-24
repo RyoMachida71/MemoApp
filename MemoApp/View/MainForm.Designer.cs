@@ -33,20 +33,20 @@
             this.現在のファイルを閉じるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.編集EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.検索SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbcMemo = new System.Windows.Forms.TabControl();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.コピーToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.切り取りToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.貼り付けToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.全選択ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.customTextBox1 = new MemoApp.CustomTextBox();
+            this.検索SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.検索ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.置換ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbcMemo = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.customTextBox1 = new MemoApp.CustomTextBox();
             this.menuStrip1.SuspendLayout();
             this.tbcMemo.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -123,7 +123,8 @@
             // 
             this.終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
             this.終了ToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.終了ToolStripMenuItem.Text = "終了";
+            this.終了ToolStripMenuItem.Text = "終了(&X)";
+            this.終了ToolStripMenuItem.Click += new System.EventHandler(this.Close_Click);
             // 
             // 編集EToolStripMenuItem
             // 
@@ -139,6 +140,48 @@
             this.編集EToolStripMenuItem.Size = new System.Drawing.Size(57, 21);
             this.編集EToolStripMenuItem.Text = "編集(&E)";
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+            this.toolStripMenuItem1.Text = "切り取り";
+            // 
+            // コピーToolStripMenuItem
+            // 
+            this.コピーToolStripMenuItem.Name = "コピーToolStripMenuItem";
+            this.コピーToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.コピーToolStripMenuItem.Text = " コピー";
+            // 
+            // 切り取りToolStripMenuItem
+            // 
+            this.切り取りToolStripMenuItem.Name = "切り取りToolStripMenuItem";
+            this.切り取りToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.切り取りToolStripMenuItem.Text = "切り取り";
+            // 
+            // 貼り付けToolStripMenuItem
+            // 
+            this.貼り付けToolStripMenuItem.Name = "貼り付けToolStripMenuItem";
+            this.貼り付けToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.貼り付けToolStripMenuItem.Text = "貼り付け";
+            // 
+            // 全選択ToolStripMenuItem
+            // 
+            this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
+            this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.全選択ToolStripMenuItem.Text = "全選択";
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            // 
             // 検索SToolStripMenuItem
             // 
             this.検索SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -149,8 +192,33 @@
             this.検索SToolStripMenuItem.Size = new System.Drawing.Size(57, 21);
             this.検索SToolStripMenuItem.Text = "検索(&S)";
             // 
+            // 検索ToolStripMenuItem
+            // 
+            this.検索ToolStripMenuItem.Name = "検索ToolStripMenuItem";
+            this.検索ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.検索ToolStripMenuItem.Text = "検索";
+            this.検索ToolStripMenuItem.Click += new System.EventHandler(this.Search_Click);
+            // 
+            // 置換ToolStripMenuItem
+            // 
+            this.置換ToolStripMenuItem.Name = "置換ToolStripMenuItem";
+            this.置換ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.置換ToolStripMenuItem.Text = "置換";
+            this.置換ToolStripMenuItem.Click += new System.EventHandler(this.Replace_Click);
+            // 
+            // grepToolStripMenuItem
+            // 
+            this.grepToolStripMenuItem.Name = "grepToolStripMenuItem";
+            this.grepToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.grepToolStripMenuItem.Text = "grep";
+            this.grepToolStripMenuItem.Click += new System.EventHandler(this.Grep_Click);
+            // 
             // tbcMemo
             // 
+            this.tbcMemo.AllowDrop = true;
+            this.tbcMemo.Controls.Add(this.tabPage1);
             this.tbcMemo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbcMemo.Location = new System.Drawing.Point(0, 24);
             this.tbcMemo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -158,51 +226,12 @@
             this.tbcMemo.SelectedIndex = 0;
             this.tbcMemo.Size = new System.Drawing.Size(933, 464);
             this.tbcMemo.TabIndex = 1;
-            // 
-            // コピーToolStripMenuItem
-            // 
-            this.コピーToolStripMenuItem.Name = "コピーToolStripMenuItem";
-            this.コピーToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.コピーToolStripMenuItem.Text = " コピー";
-            // 
-            // 切り取りToolStripMenuItem
-            // 
-            this.切り取りToolStripMenuItem.Name = "切り取りToolStripMenuItem";
-            this.切り取りToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.切り取りToolStripMenuItem.Text = "切り取り";
-            // 
-            // 貼り付けToolStripMenuItem
-            // 
-            this.貼り付けToolStripMenuItem.Name = "貼り付けToolStripMenuItem";
-            this.貼り付けToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.貼り付けToolStripMenuItem.Text = "貼り付け";
-            // 
-            // 全選択ToolStripMenuItem
-            // 
-            this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
-            this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.全選択ToolStripMenuItem.Text = "全選択";
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.redoToolStripMenuItem.Text = "Redo";
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.undoToolStripMenuItem.Text = "Undo";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem1.Text = "切り取り";
+            this.tbcMemo.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
+            this.tbcMemo.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.customTextBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Name = "tabPage1";
@@ -212,7 +241,6 @@
             this.tabPage1.Tag = this.customTextBox1;
             this.tabPage1.Text = "新規";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Parent = this.tbcMemo;
             // 
             // customTextBox1
             // 
@@ -227,33 +255,12 @@
             this.customTextBox1.Size = new System.Drawing.Size(917, 431);
             this.customTextBox1.TabIndex = 0;
             this.customTextBox1.Text = "";
-            this.customTextBox1.Parent = this.tabPage1;
-            // 
-            // 検索ToolStripMenuItem
-            // 
-            this.検索ToolStripMenuItem.Name = "検索ToolStripMenuItem";
-            this.検索ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.検索ToolStripMenuItem.Text = "検索";
-            this.検索ToolStripMenuItem.Click += new System.EventHandler(this.Search_Click);
-            // 
-            // 置換ToolStripMenuItem
-            // 
-            this.置換ToolStripMenuItem.Name = "置換ToolStripMenuItem";
-            this.置換ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.置換ToolStripMenuItem.Text = "置換";
-            this.置換ToolStripMenuItem.Click += new System.EventHandler(this.Replace_Click);
-            // 
-            // grepToolStripMenuItem
-            // 
-            this.grepToolStripMenuItem.Name = "grepToolStripMenuItem";
-            this.grepToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.grepToolStripMenuItem.Text = "grep";
-            this.grepToolStripMenuItem.Click += new System.EventHandler(this.Grep_Click);
+            this.customTextBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
+            this.customTextBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
             // 
             // Memo
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 488);
@@ -264,6 +271,8 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Memo";
             this.Text = "メモ";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tbcMemo.ResumeLayout(false);

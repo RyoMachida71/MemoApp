@@ -34,6 +34,8 @@ namespace MemoApp {
             var wTab = new TabPage();
             var wTextBox = new CustomTextBox();
             wTextBox.Parent = wTab;
+            wTextBox.DragDrop += (s, e) => this.File_DragDrop(s, e);
+            wTextBox.DragEnter += (s, e) => this.File_DragEnter(s, e);
             wTab.Text = vTitle;
             wTab.Tag = wTextBox;
             this.tbcMemo.TabPages.Add(wTab);
@@ -55,6 +57,14 @@ namespace MemoApp {
             // Avoid selecting all texts when setting the file text to TextBox.Text
             wTextBox.Select(0, 0);
         }
+        private bool ShouldSetFileToCurrentTab() => this.CurrentFile == null && !this.CurrentTextBox.Modified;
+
+        private void SetFileToCurrentTab(IFile vFile) {
+            this.CurrentFile = vFile;
+            this.CurrentTextBox.Text = vFile.Text;
+            this.CurrentTextBox.ReadOnly = vFile.IsReadOnly;
+            this.CurrentTab.Text = vFile.Name;
+        }
 
         private void NewFile_Click(object sender, EventArgs e) => this.AddTab();
 
@@ -63,11 +73,8 @@ namespace MemoApp {
             if (wDialog.ShowDialog() != DialogResult.OK) return;
             IFile wFile = new TextFile(wDialog.FileName);
             await wFile.LoadAsync();
-            if (this.CurrentFile == null && !this.CurrentTextBox.Modified) {
-                this.CurrentFile = wFile;
-                this.CurrentTextBox.Text = wFile.Text;
-                this.CurrentTextBox.ReadOnly = wFile.IsReadOnly;
-                this.CurrentTab.Text = wFile.Name;
+            if (this.ShouldSetFileToCurrentTab()) {
+                this.SetFileToCurrentTab(wFile);
                 return;
             }
             this.AddTab(wFile);
@@ -110,6 +117,24 @@ namespace MemoApp {
             });
             wGrepForm.Show();
         }
+
+        private void Close_Click(object sender, EventArgs e) => this.Close();
+
+        private void File_DragDrop(object sender, DragEventArgs e) {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+            var wPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (var wPath in wPaths) {
+                IFile wFile = new TextFile(wPath);
+                wFile.LoadAsync();
+                if (this.ShouldSetFileToCurrentTab()) {
+                    this.SetFileToCurrentTab(wFile);
+                    continue;
+                }
+                this.AddTab(wFile);
+            }
+        }
+
+        private void File_DragEnter(object sender, DragEventArgs e) => e.Effect = DragDropEffects.All;
 
         private void Copy_Click(object sender, EventArgs e) => this.CurrentTextBox.Copy();
         private void Cut_Click(object sender, EventArgs e) => this.CurrentTextBox.Cut();
