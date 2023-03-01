@@ -32,7 +32,6 @@ namespace MemoApp.Files {
         });
 
         public Task LoadAsync() => Task.Run(() => {
-            // テキストファイルの読み込み
             using (var wReader = new StreamReader(this.Path, this.Encoding)) {
                 this.Text = wReader.ReadToEnd();
             }

@@ -1,4 +1,6 @@
-﻿namespace MemoApp {
+﻿using System.Text;
+
+namespace MemoApp {
     partial class Memo {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -24,6 +26,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Memo));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ファイルFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新規作成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,9 +50,17 @@
             this.tbcMemo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.customTextBox1 = new MemoApp.CustomTextBox();
+            this.statusStripMemo = new System.Windows.Forms.StatusStrip();
+            this.statusLabelSavedMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButtonEncodingKind = new System.Windows.Forms.ToolStripSplitButton();
+            this.UTF8MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UTF16MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UTF32MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShiftJISMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tbcMemo.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.statusStripMemo.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -258,12 +269,79 @@
             this.customTextBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
             this.customTextBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
             // 
+            // statusStripMemo
+            // 
+            this.statusStripMemo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabelSavedMessage,
+            this.toolStripButtonEncodingKind});
+            this.statusStripMemo.Location = new System.Drawing.Point(0, 464);
+            this.statusStripMemo.Name = "statusStripMemo";
+            this.statusStripMemo.Size = new System.Drawing.Size(933, 24);
+            this.statusStripMemo.TabIndex = 2;
+            this.statusStripMemo.Text = "statusStrip1";
+            // 
+            // statusLabelSavedMessage
+            // 
+            this.statusLabelSavedMessage.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.statusLabelSavedMessage.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.statusLabelSavedMessage.Name = "statusLabelSavedMessage";
+            this.statusLabelSavedMessage.Size = new System.Drawing.Size(91, 19);
+            this.statusLabelSavedMessage.Text = "ファイルは未保存";
+            // 
+            // toolStripButtonEncodingKind
+            // 
+            this.toolStripButtonEncodingKind.AutoSize = false;
+            this.toolStripButtonEncodingKind.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonEncodingKind.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UTF8MenuItem,
+            this.UTF16MenuItem,
+            this.UTF32MenuItem,
+            this.ShiftJISMenuItem});
+            this.toolStripButtonEncodingKind.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEncodingKind.Image")));
+            this.toolStripButtonEncodingKind.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEncodingKind.Name = "toolStripButtonEncodingKind";
+            this.toolStripButtonEncodingKind.Size = new System.Drawing.Size(99, 22);
+            this.toolStripButtonEncodingKind.Text = "エンコードの種類";
+            // 
+            // UTF8MenuItem
+            // 
+            this.UTF8MenuItem.Name = "UTF8MenuItem";
+            this.UTF8MenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UTF8MenuItem.Tag = ((object)(resources.GetObject("UTF8MenuItem.Tag")));
+            this.UTF8MenuItem.Text = "Unicode(UTF-8)";
+            this.UTF8MenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
+            // 
+            // UTF16MenuItem
+            // 
+            this.UTF16MenuItem.Name = "UTF16MenuItem";
+            this.UTF16MenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UTF16MenuItem.Tag = ((object)(resources.GetObject("UTF16MenuItem.Tag")));
+            this.UTF16MenuItem.Text = "Unicode(UTF-16)";
+            this.UTF16MenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
+            // 
+            // UTF32MenuItem
+            // 
+            this.UTF32MenuItem.Name = "UTF32MenuItem";
+            this.UTF32MenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UTF32MenuItem.Tag = ((object)(resources.GetObject("UTF32MenuItem.Tag")));
+            this.UTF32MenuItem.Text = "Unicode(UTF-32)";
+            this.UTF32MenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
+            // 
+            // ShiftJISMenuItem
+            // 
+            this.ShiftJISMenuItem.Name = "ShiftJISMenuItem";
+            this.ShiftJISMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ShiftJISMenuItem.Tag = ((object)(resources.GetObject("ShiftJISMenuItem.Tag")));
+            this.ShiftJISMenuItem.Text = "日本語(Shift-JIS)";
+            this.ShiftJISMenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
+            // 
             // Memo
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 488);
+            this.Controls.Add(this.statusStripMemo);
             this.Controls.Add(this.tbcMemo);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -277,6 +355,8 @@
             this.menuStrip1.PerformLayout();
             this.tbcMemo.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.statusStripMemo.ResumeLayout(false);
+            this.statusStripMemo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,6 +387,13 @@
         private System.Windows.Forms.ToolStripMenuItem 検索ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 置換ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grepToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStripMemo;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabelSavedMessage;
+        private System.Windows.Forms.ToolStripSplitButton toolStripButtonEncodingKind;
+        private System.Windows.Forms.ToolStripMenuItem UTF8MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UTF16MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UTF32MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ShiftJISMenuItem;
     }
 }
 

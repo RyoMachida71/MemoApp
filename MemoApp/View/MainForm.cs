@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace MemoApp {
     public partial class Memo : Form, ISearcher {
@@ -134,7 +135,22 @@ namespace MemoApp {
             }
         }
 
+        
+
         private void File_DragEnter(object sender, DragEventArgs e) => e.Effect = DragDropEffects.All;
+        
+        private void EncodingKind_Click(object sender, EventArgs e) {
+            var wSelectedEncoding = ((ToolStripMenuItem)sender).Tag as Encoding;
+            // ↓の流れは(https://learn.microsoft.com/ja-jp/dotnet/api/system.text.encoding.convert?view=net-7.0)を参照
+
+            // 現在のテキストボックスの文字列を現在のエンコードのバイト配列に変換
+
+            // 選択されたエンコードに変換
+
+            //↑で取得したバイト配列→char配列に変換→stringに変換してテキストボックスの文字列に代入
+
+
+        }
 
         private void Copy_Click(object sender, EventArgs e) => this.CurrentTextBox.Copy();
         private void Cut_Click(object sender, EventArgs e) => this.CurrentTextBox.Cut();
@@ -148,5 +164,6 @@ namespace MemoApp {
         public void ReplaceForward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceForward(vSearchText, vReplaceText, vIsIgnoreCase);
         public void ReplaceBackward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceBackward(vSearchText, vReplaceText, vIsIgnoreCase);
         public void ReplaceAll(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceAll(vSearchText, vReplaceText, vIsIgnoreCase);
+
     }
 }
