@@ -14,7 +14,7 @@ namespace MemoApp.Files {
         public string Name => FFileInfo.Name;
         public string Text { get; set; }
         // デフォルトはshift-jisとする
-        public Encoding Encoding { get; private set; } = Encoding.GetEncoding(932);
+        public Encoding Encoding { get; set; } = Encoding.GetEncoding(932);
         public bool IsReadOnly => FFileInfo.IsReadOnly;
         public TextFile(string vPath) {
             FFileInfo= new FileInfo(vPath);

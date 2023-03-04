@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace MemoApp {
@@ -135,29 +136,19 @@ namespace MemoApp {
             }
         }
 
-        
-
         private void File_DragEnter(object sender, DragEventArgs e) => e.Effect = DragDropEffects.All;
         
         private void EncodingKind_Click(object sender, EventArgs e) {
+            // 処理の流れは(https://learn.microsoft.com/ja-jp/dotnet/api/system.text.encoding.convert?view=net-7.0)を参照
+            if (this.CurrentFile == null) return;
             var wSelectedEncoding = ((ToolStripMenuItem)sender).Tag as Encoding;
-            // ↓の流れは(https://learn.microsoft.com/ja-jp/dotnet/api/system.text.encoding.convert?view=net-7.0)を参照
-
-            // 現在のテキストボックスの文字列を現在のエンコードのバイト配列に変換
-
-            // 選択されたエンコードに変換
-
-            //↑で取得したバイト配列→char配列に変換→stringに変換してテキストボックスの文字列に代入
-
-
+            var wSourceBytes = this.CurrentFile.Encoding.GetBytes(this.CurrentTextBox.Text);
+            var wConvertedBytes = Encoding.Convert(this.CurrentFile.Encoding, wSelectedEncoding, wSourceBytes);
+            var wNewChars = new char[wSelectedEncoding.GetCharCount(wConvertedBytes, 0, wConvertedBytes.Length)];
+            wSelectedEncoding.GetChars(wConvertedBytes, 0, wConvertedBytes.Length, wNewChars, 0);
+            this.CurrentTextBox.Text = new string(wNewChars);
+            this.CurrentFile.Encoding = wSelectedEncoding;
         }
-
-        private void Copy_Click(object sender, EventArgs e) => this.CurrentTextBox.Copy();
-        private void Cut_Click(object sender, EventArgs e) => this.CurrentTextBox.Cut();
-        private void Patste_Click(object sender, EventArgs e) => this.CurrentTextBox.Paste();
-        private void SelectAll_Click(object sender, EventArgs e) => this.CurrentTextBox.SelectAll();
-        private void Redo_Click(object sender, EventArgs e) => this.CurrentTextBox.Redo();
-        private void Undo_Click(object sender, EventArgs e) => this.CurrentTextBox.Undo();
 
         public void SearchForward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchForward(vSearchText, vIsIgnoreCase);
         public void SearchBackward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchBackward(vSearchText, vIsIgnoreCase);

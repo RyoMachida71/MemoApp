@@ -9,6 +9,7 @@ namespace MemoApp.Files {
         string Path { get; }
         string Name { get; }
         string Text { get; set; }
+        Encoding Encoding { get; set; }
         bool IsReadOnly { get; }
         Task SaveAsync();
         Task LoadAsync();
