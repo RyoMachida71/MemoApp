@@ -13,5 +13,6 @@ namespace MemoApp.Files {
         bool IsReadOnly { get; }
         Task SaveAsync();
         Task LoadAsync();
+        void ReloadWithSpecifiedEncoding(Encoding vEncoding);
     }
 }

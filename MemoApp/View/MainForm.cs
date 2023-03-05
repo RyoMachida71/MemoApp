@@ -3,18 +3,9 @@ using MemoApp.Grep;
 using MemoApp.Search;
 using MemoApp.View;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace MemoApp {
     public partial class Memo : Form, ISearcher {
@@ -22,11 +13,7 @@ namespace MemoApp {
         private TabPage CurrentTab => this.tbcMemo.SelectedTab;
         private CustomTextBox CurrentTextBox => CurrentTab.Tag as CustomTextBox;
         private IFile CurrentFile {
-            get {
-                var wTextFile = CurrentTextBox.Tag as IFile;
-                if (wTextFile != null) wTextFile.Text = CurrentTextBox.Text;
-                return wTextFile;
-            }
+            get { return CurrentTextBox.Tag as IFile; }
             set { this.CurrentTextBox.Tag = value; }
         }
         public Memo() {
@@ -91,6 +78,7 @@ namespace MemoApp {
                 this.CurrentFile = wFile;
                 this.CurrentTab.Text = wFile.Name;
             }
+            this.CurrentFile.Text = this.CurrentTextBox.Text;
             await this.CurrentFile.SaveAsync();
             this.CurrentTextBox.Modified = false;
         }
@@ -139,15 +127,10 @@ namespace MemoApp {
         private void File_DragEnter(object sender, DragEventArgs e) => e.Effect = DragDropEffects.All;
         
         private void EncodingKind_Click(object sender, EventArgs e) {
-            // 処理の流れは(https://learn.microsoft.com/ja-jp/dotnet/api/system.text.encoding.convert?view=net-7.0)を参照
             if (this.CurrentFile == null) return;
             var wSelectedEncoding = ((ToolStripMenuItem)sender).Tag as Encoding;
-            var wSourceBytes = this.CurrentFile.Encoding.GetBytes(this.CurrentTextBox.Text);
-            var wConvertedBytes = Encoding.Convert(this.CurrentFile.Encoding, wSelectedEncoding, wSourceBytes);
-            var wNewChars = new char[wSelectedEncoding.GetCharCount(wConvertedBytes, 0, wConvertedBytes.Length)];
-            wSelectedEncoding.GetChars(wConvertedBytes, 0, wConvertedBytes.Length, wNewChars, 0);
-            this.CurrentTextBox.Text = new string(wNewChars);
-            this.CurrentFile.Encoding = wSelectedEncoding;
+            this.CurrentFile.ReloadWithSpecifiedEncoding(wSelectedEncoding);
+            this.CurrentTextBox.Text = this.CurrentFile.Text;
         }
 
         public void SearchForward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchForward(vSearchText, vIsIgnoreCase);
