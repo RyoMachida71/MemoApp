@@ -39,10 +39,15 @@ namespace MemoApp.View {
             btnReplaceBackward.Location = btnForwardSearch.Location;
             btnReplaceAll.Location = btnAllSearch.Location;
         }
+
         private void SearchForward_Click(object sender, EventArgs e) => FSearcher.SearchForward(this.tbxSearch.Text, this.chbIgnoreCase.Checked);
         private void SearchBackward_Click(object sender, EventArgs e) => FSearcher.SearchBackward(this.tbxSearch.Text, this.chbIgnoreCase.Checked);
         private void ReplaceForward_Click(object sender, EventArgs e) => FSearcher.ReplaceForward(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked);
         private void ReplaceBackward_Click(object sender, EventArgs e) => FSearcher.ReplaceBackward(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked);
         private void ReplaceAll_Click(object sender, EventArgs e) => FSearcher.ReplaceAll(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked);
+
+        private void btnClose_Click(object sender, EventArgs e) {
+            this.Close();
+        }
     }
 }

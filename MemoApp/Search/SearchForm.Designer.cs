@@ -37,6 +37,7 @@ namespace MemoApp.View {
             this.btnReplaceAll = new System.Windows.Forms.Button();
             this.btnReplaceBackward = new System.Windows.Forms.Button();
             this.btnReplaceForward = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbxSearch
@@ -79,7 +80,7 @@ namespace MemoApp.View {
             this.btnBackSearch.Name = "btnBackSearch";
             this.btnBackSearch.Size = new System.Drawing.Size(75, 23);
             this.btnBackSearch.TabIndex = 4;
-            this.btnBackSearch.Text = "上検索";
+            this.btnBackSearch.Text = "後方検索";
             this.btnBackSearch.UseVisualStyleBackColor = true;
             this.btnBackSearch.Click += new System.EventHandler(this.SearchBackward_Click);
             // 
@@ -89,7 +90,7 @@ namespace MemoApp.View {
             this.btnForwardSearch.Name = "btnForwardSearch";
             this.btnForwardSearch.Size = new System.Drawing.Size(75, 23);
             this.btnForwardSearch.TabIndex = 5;
-            this.btnForwardSearch.Text = "下検索";
+            this.btnForwardSearch.Text = "前方検索";
             this.btnForwardSearch.UseVisualStyleBackColor = true;
             this.btnForwardSearch.Click += new System.EventHandler(this.SearchForward_Click);
             // 
@@ -125,7 +126,7 @@ namespace MemoApp.View {
             // 
             // btnReplaceAll
             // 
-            this.btnReplaceAll.Location = new System.Drawing.Point(475, 182);
+            this.btnReplaceAll.Location = new System.Drawing.Point(359, 182);
             this.btnReplaceAll.Name = "btnReplaceAll";
             this.btnReplaceAll.Size = new System.Drawing.Size(75, 23);
             this.btnReplaceAll.TabIndex = 11;
@@ -135,7 +136,7 @@ namespace MemoApp.View {
             // 
             // btnReplaceBackward
             // 
-            this.btnReplaceBackward.Location = new System.Drawing.Point(475, 153);
+            this.btnReplaceBackward.Location = new System.Drawing.Point(359, 153);
             this.btnReplaceBackward.Name = "btnReplaceBackward";
             this.btnReplaceBackward.Size = new System.Drawing.Size(75, 23);
             this.btnReplaceBackward.TabIndex = 10;
@@ -145,7 +146,7 @@ namespace MemoApp.View {
             // 
             // btnReplaceForward
             // 
-            this.btnReplaceForward.Location = new System.Drawing.Point(475, 120);
+            this.btnReplaceForward.Location = new System.Drawing.Point(359, 120);
             this.btnReplaceForward.Name = "btnReplaceForward";
             this.btnReplaceForward.Size = new System.Drawing.Size(75, 23);
             this.btnReplaceForward.TabIndex = 9;
@@ -153,11 +154,25 @@ namespace MemoApp.View {
             this.btnReplaceForward.UseVisualStyleBackColor = true;
             this.btnReplaceForward.Click += new System.EventHandler(this.ReplaceForward_Click);
             // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(500, 184);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 12;
+            this.btnClose.Text = "閉じる";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // SearchForm
             // 
+            this.AcceptButton = this.btnClose;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(609, 219);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnReplaceAll);
             this.Controls.Add(this.btnReplaceBackward);
             this.Controls.Add(this.btnReplaceForward);
@@ -191,5 +206,6 @@ namespace MemoApp.View {
         private System.Windows.Forms.Button btnReplaceAll;
         private System.Windows.Forms.Button btnReplaceBackward;
         private System.Windows.Forms.Button btnReplaceForward;
+        private System.Windows.Forms.Button btnClose;
     }
 }
