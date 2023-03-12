@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -71,6 +72,30 @@ namespace MemoApp {
             var wIndex = this.Text.LastIndexOf(vSearchText, wSearchStartIndex, GetStringComparison(vIsIgnoreCase));
             if (wIndex >= 0) this.Select(wIndex, vSearchText.Length);
             return wIndex;
+        }
+        public void SearchAll(string vSearchText, bool vIsIgnoreCase) {
+            // 検索文字列にヒットする文字列の位置(インデックス)をすべて取得
+            var wIndexList = new List<int>();
+            var wSearchStartIndex = 0;
+            while (true) {
+                if (wSearchStartIndex > this.TextLength) break;
+                var wHitIndex = this.Text.IndexOf(vSearchText, wSearchStartIndex, GetStringComparison(vIsIgnoreCase));
+                if (wHitIndex == -1) break;
+                wIndexList.Add(wHitIndex);
+                wSearchStartIndex = ++wHitIndex;
+            }
+            if (wIndexList.Count == 0) {
+                MessageBox.Show("検索文字列にヒットしませんでした。");
+                return;
+            }
+            using (var g = this.CreateGraphics()) {
+                var wSize = g.MeasureString(vSearchText, this.Font);
+                var wBrush = new SolidBrush(Color.FromArgb(128, 255, 0, 0));
+                foreach(var wIndex in wIndexList) {
+                    var wPosition = this.GetPositionFromCharIndex(wIndex);
+                    g.FillRectangle(wBrush, wPosition.X, wPosition.Y, wSize.Width - 5, wSize.Height); // -5はハイライト描画を微調整のため
+                }
+            }
         }
         public int ReplaceForward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
             this.Focus();

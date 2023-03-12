@@ -102,7 +102,7 @@ namespace MemoApp.View {
             this.btnAllSearch.TabIndex = 6;
             this.btnAllSearch.Text = "全検索";
             this.btnAllSearch.UseVisualStyleBackColor = true;
-            this.btnAllSearch.Visible = false;
+            this.btnAllSearch.Click += new System.EventHandler(this.SearchAll_Click);
             // 
             // chbIgnoreCase
             // 

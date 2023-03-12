@@ -135,6 +135,7 @@ namespace MemoApp {
 
         public void SearchForward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchForward(vSearchText, vIsIgnoreCase);
         public void SearchBackward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchBackward(vSearchText, vIsIgnoreCase);
+        public void SearchAll(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchAll(vSearchText, vIsIgnoreCase);
         public void ReplaceForward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceForward(vSearchText, vReplaceText, vIsIgnoreCase);
         public void ReplaceBackward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceBackward(vSearchText, vReplaceText, vIsIgnoreCase);
         public void ReplaceAll(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceAll(vSearchText, vReplaceText, vIsIgnoreCase);
