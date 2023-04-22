@@ -2,18 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MemoApp {
     [ToolboxItem(true)]
     public class CustomTextBox : RichTextBox {
+        private enum Mode {
+            Normal,
+            Search
+        }
         private const int C_LeftMargin = 4;
+        private Mode _Mode { get; set; } = Mode.Normal;
         public CustomTextBox() {
             Initialize();
         }
@@ -32,6 +32,7 @@ namespace MemoApp {
             this.ScrollBars = RichTextBoxScrollBars.Vertical;
             this.SelectionIndent = C_LeftMargin;
             this.WordWrap = true;
+            this.KeyPress += this.KeyPressed;
         }
         private ContextMenuStrip CreatePopupMenu() {
             var wPopupMenu = new ContextMenuStrip();
@@ -74,7 +75,7 @@ namespace MemoApp {
             return wIndex;
         }
         public void SearchAll(string vSearchText, bool vIsIgnoreCase) {
-            // 検索文字列にヒットする文字列の位置(インデックス)をすべて取得
+            this._Mode = Mode.Search;
             var wIndexList = new List<int>();
             var wSearchStartIndex = 0;
             while (true) {
@@ -88,13 +89,10 @@ namespace MemoApp {
                 MessageBox.Show("検索文字列にヒットしませんでした。");
                 return;
             }
-            using (var g = this.CreateGraphics()) {
-                var wSize = g.MeasureString(vSearchText, this.Font);
-                var wBrush = new SolidBrush(Color.FromArgb(128, 255, 0, 0));
-                foreach(var wIndex in wIndexList) {
-                    var wPosition = this.GetPositionFromCharIndex(wIndex);
-                    g.FillRectangle(wBrush, wPosition.X, wPosition.Y, wSize.Width - 5, wSize.Height); // -5はハイライト描画を微調整のため
-                }
+            foreach (var wIndex in wIndexList) {
+                this.SelectionStart = wIndex;
+                this.SelectionLength = wIndex + vSearchText.Length;
+                this.SelectionBackColor = Color.Red;
             }
         }
         public int ReplaceForward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
@@ -124,5 +122,19 @@ namespace MemoApp {
             return wIndex;
         }
         private StringComparison GetStringComparison(bool vIsIgnoreCase) => vIsIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+
+        private void KeyPressed(object sender, KeyPressEventArgs e) {
+            switch (e.KeyChar) {
+                case (char)Keys.Escape:
+                    ReleaseSearchMode();
+                    break;
+            }
+        }
+        private void ReleaseSearchMode() {
+            this.SelectAll();
+            this.SelectionBackColor = this.BackColor;
+            this.Select(0, 0);
+            this._Mode = Mode.Normal;
+        }
     }
 }
