@@ -74,6 +74,7 @@
       <DependentUpon>GrepForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\ISearcher.cs" />
+    <Compile Include="Search\SearchArg.cs" />
     <Compile Include="Search\SearchMode.cs" />
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>

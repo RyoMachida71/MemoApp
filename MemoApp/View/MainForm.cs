@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MemoApp {
-    public partial class Memo : Form, ISearcher {
+    public partial class Memo : Form {
         private const string C_TitleForNew = "新規";
         private TabPage CurrentTab => this.tbcMemo.SelectedTab;
         private CustomTextBox CurrentTextBox => CurrentTab.Tag as CustomTextBox;
@@ -93,11 +93,11 @@ namespace MemoApp {
         }
 
         private void Search_Click(object sender, EventArgs e) {
-            var wSearchForm = new SearchForm(SearchMode.Search, this);
+            var wSearchForm = new SearchForm(Mode.Search, this.CurrentTextBox);
             wSearchForm.Show();
         }
         private void Replace_Click(object sender, EventArgs e) {
-            var wReplaceForm = new SearchForm(SearchMode.Replace, this);
+            var wReplaceForm = new SearchForm(Mode.Replace, this.CurrentTextBox);
             wReplaceForm.Show();
         }
         private void Grep_Click(object sender, EventArgs e) {
@@ -132,13 +132,5 @@ namespace MemoApp {
             this.CurrentFile.ReloadWithSpecifiedEncoding(wSelectedEncoding);
             this.CurrentTextBox.Text = this.CurrentFile.Text;
         }
-
-        public void SearchForward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchForward(vSearchText, vIsIgnoreCase);
-        public void SearchBackward(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchBackward(vSearchText, vIsIgnoreCase);
-        public void SearchAll(string vSearchText, bool vIsIgnoreCase) => this.CurrentTextBox.SearchAll(vSearchText, vIsIgnoreCase);
-        public void ReplaceForward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceForward(vSearchText, vReplaceText, vIsIgnoreCase);
-        public void ReplaceBackward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceBackward(vSearchText, vReplaceText, vIsIgnoreCase);
-        public void ReplaceAll(string vSearchText, string vReplaceText, bool vIsIgnoreCase) => this.CurrentTextBox.ReplaceAll(vSearchText, vReplaceText, vIsIgnoreCase);
-
     }
 }

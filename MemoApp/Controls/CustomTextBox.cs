@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using MemoApp.Search;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,14 +7,16 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace MemoApp {
+    public enum Mode {
+        Normal,
+        Search,
+        Replace
+    }
     [ToolboxItem(true)]
-    public class CustomTextBox : RichTextBox {
-        private enum Mode {
-            Normal,
-            Search
-        }
+    public class CustomTextBox : RichTextBox, ISearcher {
         private const int C_LeftMargin = 4;
-        private Mode _Mode { get; set; } = Mode.Normal;
+        private Mode FCurrentMode = Mode.Normal;
+        private SearchArg FArg;
         public CustomTextBox() {
             Initialize();
         }
@@ -23,16 +26,15 @@ namespace MemoApp {
             this.ContextMenuStrip = CreatePopupMenu();
             this.Dock = DockStyle.Fill;
             this.DetectUrls = true;
-            // フォント名とサイズは外から渡したほうがよい？(設定ファイルから読み込んだ内容を渡すとか)
             this.Font = new Font("ＭＳ ゴシック", 10);
             this.ForeColor = System.Drawing.Color.White;
             this.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
             this.Multiline = true;
             this.Modified = false;
-            this.ScrollBars = RichTextBoxScrollBars.Vertical;
+            this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             this.SelectionIndent = C_LeftMargin;
             this.WordWrap = true;
-            this.KeyPress += this.KeyPressed;
+            this.KeyDown += this.KeyPressed;
         }
         private ContextMenuStrip CreatePopupMenu() {
             var wPopupMenu = new ContextMenuStrip();
@@ -58,29 +60,33 @@ namespace MemoApp {
             }
             return wPopupMenu;
         }
-        public int SearchForward(string vSearchString, bool vIsIgnoreCase) {
+        public void PrepareSearch(SearchArg vArg) {
+            FCurrentMode = vArg.Mode;
+            FArg = vArg;
+        }
+        public int SearchForward() {
             this.Focus();
-            var wOffset = this.SelectedText.Equals(vSearchString, GetStringComparison(vIsIgnoreCase)) ? 1: 0;
-            var wSearchStartIndex = this.Text.IndexOf(vSearchString, this.SelectionStart + wOffset, GetStringComparison(vIsIgnoreCase));
-            if (wSearchStartIndex >= 0) this.Select(wSearchStartIndex, vSearchString.Length);
+            var wOffset = this.SelectedText.Equals(FArg.SearchText, GetStringComparison(FArg.IsIgnoreCase)) ? 1: 0;
+            var wSearchStartIndex = this.Text.IndexOf(FArg.SearchText, this.SelectionStart + wOffset, GetStringComparison(FArg.IsIgnoreCase));
+            if (wSearchStartIndex >= 0) this.Select(wSearchStartIndex, FArg.SearchText.Length);
             return wSearchStartIndex;
         }
-        public int SearchBackward(string vSearchText, bool vIsIgnoreCase) {
+        public int SearchBackward() {
             this.Focus();
-            var wSearchStartIndex = (this.SelectionStart + vSearchText.Length - 1) - 1;
+            var wSearchStartIndex = (this.SelectionStart + FArg.SearchText.Length - 1) - 1;
             if (wSearchStartIndex < 0) return -1;
             if (wSearchStartIndex > this.Text.Length) wSearchStartIndex = this.Text.Length;
-            var wIndex = this.Text.LastIndexOf(vSearchText, wSearchStartIndex, GetStringComparison(vIsIgnoreCase));
-            if (wIndex >= 0) this.Select(wIndex, vSearchText.Length);
+            var wIndex = this.Text.LastIndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsIgnoreCase));
+            if (wIndex >= 0) this.Select(wIndex, FArg.SearchText.Length);
             return wIndex;
         }
-        public void SearchAll(string vSearchText, bool vIsIgnoreCase) {
-            this._Mode = Mode.Search;
+        public void SearchAll() {
+            this.FCurrentMode = Mode.Search;
             var wIndexList = new List<int>();
             var wSearchStartIndex = 0;
             while (true) {
                 if (wSearchStartIndex > this.TextLength) break;
-                var wHitIndex = this.Text.IndexOf(vSearchText, wSearchStartIndex, GetStringComparison(vIsIgnoreCase));
+                var wHitIndex = this.Text.IndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsIgnoreCase));
                 if (wHitIndex == -1) break;
                 wIndexList.Add(wHitIndex);
                 wSearchStartIndex = ++wHitIndex;
@@ -90,51 +96,61 @@ namespace MemoApp {
                 return;
             }
             foreach (var wIndex in wIndexList) {
-                this.SelectionStart = wIndex;
-                this.SelectionLength = wIndex + vSearchText.Length;
+                this.Select(wIndex, wIndex + FArg.SearchText.Length);
                 this.SelectionBackColor = Color.Red;
             }
         }
-        public int ReplaceForward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
+        public int ReplaceForward() {
             this.Focus();
-            if (this.SelectedText == vSearchText) this.SelectedText = vReplaceText;
-            var wIndex = this.SearchForward(vSearchText, vIsIgnoreCase);
+            if (this.SelectedText == FArg.SearchText) this.SelectedText = FArg.ReplaceText;
+            var wIndex = this.SearchForward();
             return wIndex;
         }
-        public int ReplaceBackward(string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
+        public int ReplaceBackward() {
             this.Focus();
-            if (this.SelectedText == vSearchText) {
+            if (this.SelectedText == FArg.SearchText) {
                 int wOldPosition = this.SelectionStart;
-                this.SelectedText = vReplaceText;
+                this.SelectedText = FArg.ReplaceText;
                 this.SelectionStart = wOldPosition;
             }
-            var wIndex = this.SearchBackward(vSearchText, vIsIgnoreCase);
+            var wIndex = this.SearchBackward();
             return wIndex;
         }
-        public int ReplaceAll(string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
+        public int ReplaceAll() {
             // 全置換
-            this.SelectionStart = 0;
-            this.SelectionLength = 0;
+            this.Select(0, 0);
             int wIndex = 0;
             while (wIndex >= 0) {
-                wIndex = this.ReplaceForward(vSearchText, vReplaceText, vIsIgnoreCase);
+                wIndex = this.ReplaceForward();
             }
             return wIndex;
         }
         private StringComparison GetStringComparison(bool vIsIgnoreCase) => vIsIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
-        private void KeyPressed(object sender, KeyPressEventArgs e) {
-            switch (e.KeyChar) {
-                case (char)Keys.Escape:
-                    ReleaseSearchMode();
+        private void KeyPressed(object sender, KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.Escape:
+                    ToNormalMode();
+                    break;
+                case Keys.F3:
+                    if (FCurrentMode == Mode.Search) this.SearchForward();
+                    else if (FCurrentMode == Mode.Replace) this.ReplaceForward();
+                    break;
+                case Keys.Shift | Keys.F3:
+                    if (FCurrentMode == Mode.Search) this.SearchBackward();
+                    else if (FCurrentMode == Mode.Replace) this.ReplaceBackward();
                     break;
             }
         }
-        private void ReleaseSearchMode() {
-            this.SelectAll();
-            this.SelectionBackColor = this.BackColor;
-            this.Select(0, 0);
-            this._Mode = Mode.Normal;
+        private void ToNormalMode() {
+            if (this.FCurrentMode != Mode.Normal) {
+                var wCaret = this.SelectionStart;
+                this.SelectAll();
+                this.SelectionBackColor = this.BackColor;
+                this.Select(wCaret, 0);
+                this.FCurrentMode = Mode.Normal;
+            }
         }
+        
     }
 }

@@ -262,7 +262,7 @@ namespace MemoApp {
             this.customTextBox1.ForeColor = System.Drawing.Color.White;
             this.customTextBox1.Location = new System.Drawing.Point(4, 3);
             this.customTextBox1.Name = "customTextBox1";
-            this.customTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.customTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.customTextBox1.Size = new System.Drawing.Size(917, 431);
             this.customTextBox1.TabIndex = 0;
             this.customTextBox1.Text = "";

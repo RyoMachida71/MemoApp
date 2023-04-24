@@ -1,22 +1,14 @@
 ﻿using MemoApp.Search;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MemoApp.View {
     public partial class SearchForm : Form {
         private ISearcher FSearcher;
-        public SearchForm(SearchMode vSearchMode, ISearcher vSearcher) {
+        public SearchForm(Mode vMode, ISearcher vSearcher) {
             InitializeComponent();
             FSearcher = vSearcher;
-            if (vSearchMode == SearchMode.Search) this.InitializeSearchForm();
+            if (vMode == Mode.Search) this.InitializeSearchForm();
             else this.InitializeReplaceForm();
         }
         private void InitializeSearchForm() {
@@ -35,20 +27,36 @@ namespace MemoApp.View {
             btnBackSearch.Visible = false;
             btnAllSearch.Enabled = false;
             btnAllSearch.Visible = false;
-            btnReplaceForward.Location = btnBackSearch.Location;
-            btnReplaceBackward.Location = btnForwardSearch.Location;
+            btnReplaceForward.Location = btnForwardSearch.Location;
+            btnReplaceBackward.Location = btnBackSearch.Location;
             btnReplaceAll.Location = btnAllSearch.Location;
         }
 
-        private void SearchForward_Click(object sender, EventArgs e) => FSearcher.SearchForward(this.tbxSearch.Text, this.chbIgnoreCase.Checked);
-        private void SearchBackward_Click(object sender, EventArgs e) => FSearcher.SearchBackward(this.tbxSearch.Text, this.chbIgnoreCase.Checked);
+        private void SearchForward_Click(object sender, EventArgs e) {
+            FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
+            FSearcher.SearchForward();
+        }
+        private void SearchBackward_Click(object sender, EventArgs e) {
+            FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
+            FSearcher.SearchBackward();
+        }
         private void SearchAll_Click(object sender, EventArgs e) {
-            FSearcher.SearchAll(this.tbxSearch.Text, this.chbIgnoreCase.Checked);
+            FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
+            FSearcher.SearchAll();
             this.Close();
         }
-        private void ReplaceForward_Click(object sender, EventArgs e) => FSearcher.ReplaceForward(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked);
-        private void ReplaceBackward_Click(object sender, EventArgs e) => FSearcher.ReplaceBackward(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked);
-        private void ReplaceAll_Click(object sender, EventArgs e) => FSearcher.ReplaceAll(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked);
+        private void ReplaceForward_Click(object sender, EventArgs e) {
+            FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
+            FSearcher.ReplaceForward();
+        }
+        private void ReplaceBackward_Click(object sender, EventArgs e) {
+            FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
+            FSearcher.ReplaceBackward();
+        }
+        private void ReplaceAll_Click(object sender, EventArgs e) {
+            FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
+            FSearcher.ReplaceAll();
+        }
 
         private void btnClose_Click(object sender, EventArgs e) {
             this.Close();
