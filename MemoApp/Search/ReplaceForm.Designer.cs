@@ -1,5 +1,5 @@
 ﻿namespace MemoApp.Search {
-    partial class SearchForm {
+    partial class ReplaceForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -37,13 +37,13 @@
             // 
             this.btnBackward.Click += new System.EventHandler(this.btnBackward_Click);
             // 
-            // SearchForm
+            // ReplaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "SearchForm";
-            this.Text = "SearchForm";
+            this.Name = "ReplaceForm";
+            this.Text = "ReplaceForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 

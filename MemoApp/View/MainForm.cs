@@ -93,11 +93,11 @@ namespace MemoApp {
         }
 
         private void Search_Click(object sender, EventArgs e) {
-            var wSearchForm = new SearchForm(Mode.Search, this.CurrentTextBox);
+            var wSearchForm = new SearchForm(this.CurrentTextBox);
             wSearchForm.Show();
         }
         private void Replace_Click(object sender, EventArgs e) {
-            var wReplaceForm = new SearchForm(Mode.Replace, this.CurrentTextBox);
+            var wReplaceForm = new ReplaceForm(this.CurrentTextBox);
             wReplaceForm.Show();
         }
         private void Grep_Click(object sender, EventArgs e) {

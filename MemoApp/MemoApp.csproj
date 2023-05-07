@@ -73,9 +73,26 @@
     <Compile Include="Grep\GrepForm.Designer.cs">
       <DependentUpon>GrepForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Search\BasicSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\BasicSearchForm.Designer.cs">
+      <DependentUpon>BasicSearchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Search\ISearcher.cs" />
+    <Compile Include="Search\ReplaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\ReplaceForm.Designer.cs">
+      <DependentUpon>ReplaceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Search\SearchArg.cs" />
-    <Compile Include="Search\SearchMode.cs" />
+    <Compile Include="Search\SearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,14 +104,23 @@
     <Compile Include="Controls\CustomTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Search\SearchForm.cs">
+    <Compile Include="Search\SearchForm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Search\SearchForm.Designer.cs">
-      <DependentUpon>SearchForm.cs</DependentUpon>
+    <Compile Include="Search\SearchForm1.Designer.cs">
+      <DependentUpon>SearchForm1.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Grep\GrepForm.resx">
       <DependentUpon>GrepForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Search\BasicSearchForm.resx">
+      <DependentUpon>BasicSearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Search\ReplaceForm.resx">
+      <DependentUpon>ReplaceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Search\SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -108,8 +134,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Search\SearchForm.resx">
-      <DependentUpon>SearchForm.cs</DependentUpon>
+    <EmbeddedResource Include="Search\SearchForm1.resx">
+      <DependentUpon>SearchForm1.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

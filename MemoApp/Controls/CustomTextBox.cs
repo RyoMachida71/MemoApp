@@ -84,8 +84,7 @@ namespace MemoApp {
             this.FCurrentMode = Mode.Search;
             var wIndexList = new List<int>();
             var wSearchStartIndex = 0;
-            while (true) {
-                if (wSearchStartIndex > this.TextLength) break;
+            while (wSearchStartIndex < this.TextLength) {
                 var wHitIndex = this.Text.IndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsIgnoreCase));
                 if (wHitIndex == -1) break;
                 wIndexList.Add(wHitIndex);
@@ -96,7 +95,8 @@ namespace MemoApp {
                 return;
             }
             foreach (var wIndex in wIndexList) {
-                this.Select(wIndex, wIndex + FArg.SearchText.Length);
+                this.SelectionStart = wIndex;
+                this.SelectionLength = FArg.SearchText.Length;
                 this.SelectionBackColor = Color.Red;
             }
         }
@@ -118,13 +118,13 @@ namespace MemoApp {
         }
         public int ReplaceAll() {
             // 全置換
-            this.Select(0, 0);
-            int wIndex = 0;
+            int wIndex = this.SelectionStart = 0;
             while (wIndex >= 0) {
                 wIndex = this.ReplaceForward();
             }
             return wIndex;
         }
+
         private StringComparison GetStringComparison(bool vIsIgnoreCase) => vIsIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
         private void KeyPressed(object sender, KeyEventArgs e) {
@@ -136,6 +136,7 @@ namespace MemoApp {
                     if (FCurrentMode == Mode.Search) this.SearchForward();
                     else if (FCurrentMode == Mode.Replace) this.ReplaceForward();
                     break;
+                // todo: Shiftを修飾キーとして押されたままでかつF3が押下されているかどうかを判別する
                 case Keys.Shift | Keys.F3:
                     if (FCurrentMode == Mode.Search) this.SearchBackward();
                     else if (FCurrentMode == Mode.Replace) this.ReplaceBackward();
