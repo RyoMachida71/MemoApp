@@ -32,7 +32,7 @@
             this.btnBackward = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.chbRegularExpression = new System.Windows.Forms.CheckBox();
-            this.chbIgnoreCase = new System.Windows.Forms.CheckBox();
+            this.chbDistinguishCase = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblSearch
@@ -117,13 +117,13 @@
             // 
             // chbIgnoreCase
             // 
-            this.chbIgnoreCase.AutoSize = true;
-            this.chbIgnoreCase.Location = new System.Drawing.Point(18, 131);
-            this.chbIgnoreCase.Name = "chbIgnoreCase";
-            this.chbIgnoreCase.Size = new System.Drawing.Size(154, 16);
-            this.chbIgnoreCase.TabIndex = 14;
-            this.chbIgnoreCase.Text = "大文字/小文字を区別する";
-            this.chbIgnoreCase.UseVisualStyleBackColor = true;
+            this.chbDistinguishCase.AutoSize = true;
+            this.chbDistinguishCase.Location = new System.Drawing.Point(18, 131);
+            this.chbDistinguishCase.Name = "chbDistinguishCase";
+            this.chbDistinguishCase.Size = new System.Drawing.Size(154, 16);
+            this.chbDistinguishCase.TabIndex = 14;
+            this.chbDistinguishCase.Text = "大文字/小文字を区別する";
+            this.chbDistinguishCase.UseVisualStyleBackColor = true;
             // 
             // BasicSearchForm
             // 
@@ -133,7 +133,7 @@
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(407, 197);
             this.Controls.Add(this.chbRegularExpression);
-            this.Controls.Add(this.chbIgnoreCase);
+            this.Controls.Add(this.chbDistinguishCase);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnAll);
             this.Controls.Add(this.btnForward);
@@ -160,6 +160,6 @@
         protected System.Windows.Forms.Button btnBackward;
         protected System.Windows.Forms.Button btnClose;
         protected System.Windows.Forms.CheckBox chbRegularExpression;
-        protected System.Windows.Forms.CheckBox chbIgnoreCase;
+        protected System.Windows.Forms.CheckBox chbDistinguishCase;
     }
 }

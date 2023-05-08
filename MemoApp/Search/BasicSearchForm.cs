@@ -15,12 +15,12 @@ namespace MemoApp.Search {
             FSearcher = vSearcher;
         }
         protected void RunSearch(Func<int> vSearch) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
+            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbDistinguishCase.Checked));
             vSearch();
             this.Close();
         }
         protected void RunReplace(Func<int> vReplace) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
+            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbDistinguishCase.Checked));
             vReplace();
             this.Close();
         }

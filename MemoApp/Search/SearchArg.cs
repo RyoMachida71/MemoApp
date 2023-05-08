@@ -4,18 +4,18 @@ namespace MemoApp.Search {
         public Mode Mode { get; private set; }
         public string SearchText { get; private set; }
         public string ReplaceText { get; private set; }
-        public bool IsIgnoreCase { get; private set; }
-        private SearchArg(Mode vMode, string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
+        public bool IsDistinguishCase { get; private set; }
+        private SearchArg(Mode vMode, string vSearchText, string vReplaceText, bool vIsDistinguishCase) {
             this.Mode = vMode;
             this.SearchText = vSearchText;
             this.ReplaceText = vReplaceText;
-            this.IsIgnoreCase = vIsIgnoreCase;
+            this.IsDistinguishCase = vIsDistinguishCase;
         }
-        public static SearchArg CreateSearch(string vSearchText, bool vIsIgnoreCase) {
-            return new SearchArg(Mode.Search, vSearchText, "", vIsIgnoreCase);
+        public static SearchArg CreateSearch(string vSearchText, bool vIsDistinguishCase) {
+            return new SearchArg(Mode.Search, vSearchText, "", vIsDistinguishCase);
         }
-        public static SearchArg CreateReplace(string vSearchText, string vReplaceText, bool vIsIgnoreCase) {
-            return new SearchArg(Mode.Replace, vSearchText, vReplaceText, vIsIgnoreCase);
+        public static SearchArg CreateReplace(string vSearchText, string vReplaceText, bool vIsDistinguishCase) {
+            return new SearchArg(Mode.Replace, vSearchText, vReplaceText, vIsDistinguishCase);
         }
     }
 }

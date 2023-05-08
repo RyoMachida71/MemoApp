@@ -66,8 +66,8 @@ namespace MemoApp {
         }
         public int SearchForward() {
             this.Focus();
-            var wOffset = this.SelectedText.Equals(FArg.SearchText, GetStringComparison(FArg.IsIgnoreCase)) ? 1: 0;
-            var wSearchStartIndex = this.Text.IndexOf(FArg.SearchText, this.SelectionStart + wOffset, GetStringComparison(FArg.IsIgnoreCase));
+            var wOffset = this.SelectedText.Equals(FArg.SearchText, GetStringComparison(FArg.IsDistinguishCase)) ? 1: 0;
+            var wSearchStartIndex = this.Text.IndexOf(FArg.SearchText, this.SelectionStart + wOffset, GetStringComparison(FArg.IsDistinguishCase));
             if (wSearchStartIndex >= 0) this.Select(wSearchStartIndex, FArg.SearchText.Length);
             return wSearchStartIndex;
         }
@@ -76,7 +76,7 @@ namespace MemoApp {
             var wSearchStartIndex = (this.SelectionStart + FArg.SearchText.Length - 1) - 1;
             if (wSearchStartIndex < 0) return -1;
             if (wSearchStartIndex > this.Text.Length) wSearchStartIndex = this.Text.Length;
-            var wIndex = this.Text.LastIndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsIgnoreCase));
+            var wIndex = this.Text.LastIndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsDistinguishCase));
             if (wIndex >= 0) this.Select(wIndex, FArg.SearchText.Length);
             return wIndex;
         }
@@ -85,7 +85,7 @@ namespace MemoApp {
             var wIndexList = new List<int>();
             var wSearchStartIndex = 0;
             while (wSearchStartIndex < this.TextLength) {
-                var wHitIndex = this.Text.IndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsIgnoreCase));
+                var wHitIndex = this.Text.IndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsDistinguishCase));
                 if (wHitIndex == -1) break;
                 wIndexList.Add(wHitIndex);
                 wSearchStartIndex = ++wHitIndex;
@@ -125,7 +125,7 @@ namespace MemoApp {
             return wIndex;
         }
 
-        private StringComparison GetStringComparison(bool vIsIgnoreCase) => vIsIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+        private StringComparison GetStringComparison(bool vIsDistinguishCase) => vIsDistinguishCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
 
         private void KeyPressed(object sender, KeyEventArgs e) {
             switch (e.KeyCode) {
@@ -136,8 +136,7 @@ namespace MemoApp {
                     if (FCurrentMode == Mode.Search) this.SearchForward();
                     else if (FCurrentMode == Mode.Replace) this.ReplaceForward();
                     break;
-                // todo: Shiftを修飾キーとして押されたままでかつF3が押下されているかどうかを判別する
-                case Keys.Shift | Keys.F3:
+                case Keys.F4:
                     if (FCurrentMode == Mode.Search) this.SearchBackward();
                     else if (FCurrentMode == Mode.Replace) this.ReplaceBackward();
                     break;
