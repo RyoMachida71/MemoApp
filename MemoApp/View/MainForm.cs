@@ -1,7 +1,6 @@
 ﻿using MemoApp.Files;
 using MemoApp.Grep;
 using MemoApp.Search;
-using MemoApp.View;
 using System;
 using System.Text;
 using System.Threading.Tasks;

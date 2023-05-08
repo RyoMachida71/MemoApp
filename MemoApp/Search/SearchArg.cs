@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MemoApp.Search {
     public class SearchArg {
         public Mode Mode { get; private set; }

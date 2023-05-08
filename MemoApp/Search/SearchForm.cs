@@ -13,22 +13,10 @@ namespace MemoApp.Search {
             this.tbxReplace.Visible = false;
         }
 
-        protected override void btnForward_Click(object sender, EventArgs e) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
-            this.FSearcher.SearchForward();
-            this.Close();
-        }
+        protected override void btnForward_Click(object sender, EventArgs e) => this.RunSearch(FSearcher.SearchForward);
 
-        protected override void btnBackward_Click(object sender, EventArgs e) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
-            this.FSearcher.SearchBackward();
-            this.Close();
-        }
+        protected override void btnBackward_Click(object sender, EventArgs e) => this.RunSearch(FSearcher.SearchBackward);
 
-        protected override void btnAll_Click(object sender, EventArgs e) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
-            this.FSearcher.SearchAll();
-            this.Close();
-        }
+        protected override void btnAll_Click(object sender, EventArgs e) => this.RunSearch(FSearcher.SearchAll);
     }
 }

@@ -80,7 +80,7 @@ namespace MemoApp {
             if (wIndex >= 0) this.Select(wIndex, FArg.SearchText.Length);
             return wIndex;
         }
-        public void SearchAll() {
+        public int SearchAll() {
             this.FCurrentMode = Mode.Search;
             var wIndexList = new List<int>();
             var wSearchStartIndex = 0;
@@ -92,13 +92,14 @@ namespace MemoApp {
             }
             if (wIndexList.Count == 0) {
                 MessageBox.Show("検索文字列にヒットしませんでした。");
-                return;
+                return -1;
             }
             foreach (var wIndex in wIndexList) {
                 this.SelectionStart = wIndex;
                 this.SelectionLength = FArg.SearchText.Length;
                 this.SelectionBackColor = Color.Red;
             }
+            return wSearchStartIndex;
         }
         public int ReplaceForward() {
             this.Focus();
@@ -117,7 +118,6 @@ namespace MemoApp {
             return wIndex;
         }
         public int ReplaceAll() {
-            // 全置換
             int wIndex = this.SelectionStart = 0;
             while (wIndex >= 0) {
                 wIndex = this.ReplaceForward();

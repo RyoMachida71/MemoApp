@@ -104,12 +104,6 @@
     <Compile Include="Controls\CustomTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Search\SearchForm1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Search\SearchForm1.Designer.cs">
-      <DependentUpon>SearchForm1.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Grep\GrepForm.resx">
       <DependentUpon>GrepForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,9 +128,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Search\SearchForm1.resx">
-      <DependentUpon>SearchForm1.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

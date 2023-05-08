@@ -5,7 +5,7 @@ namespace MemoApp.Search {
     public partial class BasicSearchForm : Form {
         protected ISearcher FSearcher;
         /// <summary>
-        /// デザイナ表示用のデフォルトコンストラクタ
+        /// Default constructor to make designer work properly
         /// </summary>
         public BasicSearchForm() {
             InitializeComponent();
@@ -14,9 +14,17 @@ namespace MemoApp.Search {
             InitializeComponent();
             FSearcher = vSearcher;
         }
-        protected void btnClose_Click(object sender, EventArgs e) {
+        protected void RunSearch(Func<int> vSearch) {
+            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbIgnoreCase.Checked));
+            vSearch();
             this.Close();
         }
+        protected void RunReplace(Func<int> vReplace) {
+            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
+            vReplace();
+            this.Close();
+        }
+        protected void btnClose_Click(object sender, EventArgs e) => this.Close();
 
         protected virtual void btnForward_Click(object sender, EventArgs e) {}
 

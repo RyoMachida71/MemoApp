@@ -9,19 +9,11 @@ namespace MemoApp.Search {
             this.btnAll.Text = "全置換";
         }
 
-        protected override void btnForward_Click(object sender, EventArgs e) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
-            this.FSearcher.ReplaceForward();
-        }
+        protected override void btnForward_Click(object sender, EventArgs e) => this.RunReplace(FSearcher.ReplaceForward);
+        
 
-        protected override void btnBackward_Click(object sender, EventArgs e) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
-            this.FSearcher.ReplaceBackward();
-        }
+        protected override void btnBackward_Click(object sender, EventArgs e) => this.RunReplace(FSearcher.ReplaceBackward);
 
-        protected override void btnAll_Click(object sender, EventArgs e) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbIgnoreCase.Checked));
-            this.FSearcher.ReplaceAll();
-        }
+        protected override void btnAll_Click(object sender, EventArgs e) => this.RunReplace(FSearcher.ReplaceAll);
     }
 }
