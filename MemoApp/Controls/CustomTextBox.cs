@@ -34,7 +34,7 @@ namespace MemoApp {
             this.Modified = false;
             this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             this.SelectionIndent = C_LeftMargin;
-            this.WordWrap = true;
+            this.WordWrap = false;
             this.KeyDown += this.KeyPressed;
         }
         private ContextMenuStrip CreatePopupMenu() {
