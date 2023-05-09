@@ -20,7 +20,7 @@ namespace MemoApp.Controls {
         }
         private void TextBox_TextChanged(object sender, EventArgs e) => UpdateLineNumber();
         private void TextBox_VSchroll(object sender, EventArgs e) => UpdateLineNumber();
-        private void UpdateLineNumber() {
+        public void UpdateLineNumber() {
             using (Graphics g = LineNumberPanel.CreateGraphics()) {
                 g.Clear(LineNumberPanel.BackColor);
                 int wLineCount = TextBox.Lines.Length;

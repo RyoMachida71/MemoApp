@@ -21,6 +21,7 @@ namespace MemoApp {
             var wTextForm = new TextForm();
             this.CurrentTab.Controls.Add(wTextForm);
             this.CurrentTab.Tag = wTextForm;
+            this.Resize += (s, e) => Memo_Resize(s, e);
         }
         /// <summary>
         /// Set default focus on textbox when loading
@@ -28,6 +29,7 @@ namespace MemoApp {
         private void Memo_Load(object sender, EventArgs e) {
             this.ActiveControl = this.CurrentTextBox;
         }
+        private void Memo_Resize(object sender, EventArgs e) => ((TextForm)CurrentTab.Tag).UpdateLineNumber();
         private void AddTab(string vTitle = C_TitleForNew) {
             var wTab = new TabPage();
             this.tbcMemo.TabPages.Add(wTab);
