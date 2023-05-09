@@ -25,7 +25,6 @@ namespace MemoApp {
         /// コード エディターで変更しないでください。
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Memo));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ファイルFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +48,6 @@ namespace MemoApp {
             this.grepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMemo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.customTextBox1 = new MemoApp.CustomTextBox();
             this.statusStripMemo = new System.Windows.Forms.StatusStrip();
             this.statusLabelSavedMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripButtonEncodingKind = new System.Windows.Forms.ToolStripSplitButton();
@@ -57,10 +55,8 @@ namespace MemoApp {
             this.UTF16MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UTF32MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShiftJISMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnlLineNumber = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.tbcMemo.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.statusStripMemo.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -208,7 +204,7 @@ namespace MemoApp {
             // 
             this.検索ToolStripMenuItem.Name = "検索ToolStripMenuItem";
             this.検索ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.検索ToolStripMenuItem.Text = "検索";
             this.検索ToolStripMenuItem.Click += new System.EventHandler(this.Search_Click);
             // 
@@ -216,14 +212,14 @@ namespace MemoApp {
             // 
             this.置換ToolStripMenuItem.Name = "置換ToolStripMenuItem";
             this.置換ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.置換ToolStripMenuItem.Text = "置換";
             this.置換ToolStripMenuItem.Click += new System.EventHandler(this.Replace_Click);
             // 
             // grepToolStripMenuItem
             // 
             this.grepToolStripMenuItem.Name = "grepToolStripMenuItem";
-            this.grepToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.grepToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.grepToolStripMenuItem.Text = "grep";
             this.grepToolStripMenuItem.Click += new System.EventHandler(this.Grep_Click);
             // 
@@ -243,36 +239,12 @@ namespace MemoApp {
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.pnlLineNumber);
-            this.tabPage1.Controls.Add(this.customTextBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(925, 437);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Tag = this.customTextBox1;
             this.tabPage1.Text = "新規";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // customTextBox1
-            // 
-            this.customTextBox1.AcceptsTab = true;
-            this.customTextBox1.AllowDrop = true;
-            this.customTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.customTextBox1.BackColor = System.Drawing.Color.Black;
-            this.customTextBox1.Font = new System.Drawing.Font("ＭＳ ゴシック", 10F);
-            this.customTextBox1.ForeColor = System.Drawing.Color.White;
-            this.customTextBox1.Location = new System.Drawing.Point(41, 0);
-            this.customTextBox1.Name = "customTextBox1";
-            this.customTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.customTextBox1.Size = new System.Drawing.Size(884, 437);
-            this.customTextBox1.TabIndex = 0;
-            this.customTextBox1.Text = "";
-            this.customTextBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
-            this.customTextBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
-            this.customTextBox1.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
-            this.customTextBox1.VScroll += new System.EventHandler(this.TextBox_VSchroll);
             // 
             // statusStripMemo
             // 
@@ -311,7 +283,7 @@ namespace MemoApp {
             // UTF8MenuItem
             // 
             this.UTF8MenuItem.Name = "UTF8MenuItem";
-            this.UTF8MenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UTF8MenuItem.Size = new System.Drawing.Size(162, 22);
             this.UTF8MenuItem.Tag = ((object)(resources.GetObject("UTF8MenuItem.Tag")));
             this.UTF8MenuItem.Text = "Unicode(UTF-8)";
             this.UTF8MenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
@@ -319,7 +291,7 @@ namespace MemoApp {
             // UTF16MenuItem
             // 
             this.UTF16MenuItem.Name = "UTF16MenuItem";
-            this.UTF16MenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UTF16MenuItem.Size = new System.Drawing.Size(162, 22);
             this.UTF16MenuItem.Tag = ((object)(resources.GetObject("UTF16MenuItem.Tag")));
             this.UTF16MenuItem.Text = "Unicode(UTF-16)";
             this.UTF16MenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
@@ -327,7 +299,7 @@ namespace MemoApp {
             // UTF32MenuItem
             // 
             this.UTF32MenuItem.Name = "UTF32MenuItem";
-            this.UTF32MenuItem.Size = new System.Drawing.Size(180, 22);
+            this.UTF32MenuItem.Size = new System.Drawing.Size(162, 22);
             this.UTF32MenuItem.Tag = ((object)(resources.GetObject("UTF32MenuItem.Tag")));
             this.UTF32MenuItem.Text = "Unicode(UTF-32)";
             this.UTF32MenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
@@ -335,21 +307,10 @@ namespace MemoApp {
             // ShiftJISMenuItem
             // 
             this.ShiftJISMenuItem.Name = "ShiftJISMenuItem";
-            this.ShiftJISMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ShiftJISMenuItem.Size = new System.Drawing.Size(162, 22);
             this.ShiftJISMenuItem.Tag = ((object)(resources.GetObject("ShiftJISMenuItem.Tag")));
             this.ShiftJISMenuItem.Text = "日本語(Shift-JIS)";
             this.ShiftJISMenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
-            // 
-            // pnlLineNumber
-            // 
-            this.pnlLineNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlLineNumber.BackColor = System.Drawing.Color.Black;
-            this.pnlLineNumber.ForeColor = System.Drawing.Color.White;
-            this.pnlLineNumber.Location = new System.Drawing.Point(0, 0);
-            this.pnlLineNumber.Name = "pnlLineNumber";
-            this.pnlLineNumber.Size = new System.Drawing.Size(41, 441);
-            this.pnlLineNumber.TabIndex = 1;
             // 
             // Memo
             // 
@@ -371,7 +332,6 @@ namespace MemoApp {
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tbcMemo.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.statusStripMemo.ResumeLayout(false);
             this.statusStripMemo.PerformLayout();
             this.ResumeLayout(false);
@@ -393,7 +353,6 @@ namespace MemoApp {
         private System.Windows.Forms.ToolStripMenuItem 検索SToolStripMenuItem;
         private System.Windows.Forms.TabControl tbcMemo;
         private System.Windows.Forms.TabPage tabPage1;
-        private CustomTextBox customTextBox1;
         private System.Windows.Forms.ToolStripMenuItem コピーToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 切り取りToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 貼り付けToolStripMenuItem;
@@ -411,7 +370,6 @@ namespace MemoApp {
         private System.Windows.Forms.ToolStripMenuItem UTF16MenuItem;
         private System.Windows.Forms.ToolStripMenuItem UTF32MenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShiftJISMenuItem;
-        private System.Windows.Forms.Panel pnlLineNumber;
     }
 }
 

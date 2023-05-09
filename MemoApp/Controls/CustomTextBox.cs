@@ -17,7 +17,6 @@ namespace MemoApp {
         private const int C_LeftMargin = 4;
         private Mode FCurrentMode = Mode.Normal;
         private SearchArg FArg;
-        public int LineHeight => (int)this.Font.GetHeight();
         public CustomTextBox() {
             Initialize();
         }

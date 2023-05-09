@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MemoApp {
     public class EncodingDetecter {
+        private static Encoding Default => Encoding.GetEncoding(932);
         public static Encoding Detect(string vPath) {
+            if (!File.Exists(vPath)) return Default;
             byte[] wBytes;
             using (var wFileStream = File.Open(vPath, FileMode.Open, FileAccess.Read)) {
                 wBytes = new byte[wFileStream.Length];
@@ -24,7 +22,7 @@ namespace MemoApp {
             if (wBytes[0] == 0x00 && wBytes[1] == 0x00 && wBytes[2] == 0xFE && wBytes[3] == 0xFF) return new UTF32Encoding(true, true); //UTF-32BE
 
             // デフォルトはshift-jis
-            return Encoding.GetEncoding(932);
+            return Default;
         }
     }
 }

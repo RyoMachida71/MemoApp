@@ -3,8 +3,6 @@ using MemoApp.Files;
 using MemoApp.Grep;
 using MemoApp.Search;
 using System;
-using System.Drawing;
-using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,13 +11,16 @@ namespace MemoApp {
     public partial class Memo : Form {
         private const string C_TitleForNew = "新規";
         private TabPage CurrentTab => this.tbcMemo.SelectedTab;
-        private CustomTextBox CurrentTextBox => CurrentTab.Tag as CustomTextBox;
+        private CustomTextBox CurrentTextBox => ((TextForm)CurrentTab.Tag).TextBox;
         private IFile CurrentFile {
             get { return CurrentTextBox.Tag as IFile; }
             set { this.CurrentTextBox.Tag = value; }
         }
         public Memo() {
             InitializeComponent();
+            var wTextForm = new TextForm();
+            this.CurrentTab.Controls.Add(wTextForm);
+            this.CurrentTab.Tag = wTextForm;
         }
         /// <summary>
         /// Set default focus on textbox when loading
@@ -33,52 +34,26 @@ namespace MemoApp {
             this.tbcMemo.SelectedTab = wTab;
             var wTextForm = new TextForm();
             wTextForm.Parent = wTab;
-            /*
-            var wLineNumPanel = InitializeLineNumPanel();
-            wLineNumPanel.Parent = wTab;
-            var wTextBox = new CustomTextBox();
-            wTextBox.Parent = wTab;
-            wTextBox.Location = new Point(wLineNumPanel.Size.Width, 0);
-            wTextBox.DragDrop += (s, e) => this.File_DragDrop(s, e);
-            wTextBox.DragEnter += (s, e) => this.File_DragEnter(s, e);
-            wTextBox.TextChanged += (s, e) => this.TextBox_TextChanged(s, e);
-            wTextBox.VScroll += (s, e) => this.TextBox_VSchroll(s, e);
+            wTextForm.DragDrop += (s, e) => this.File_DragDrop(s, e);
+            wTextForm.DragEnter += (s, e) => this.File_DragEnter(s, e);
             wTab.Text = vTitle;
-            wTab.Tag = wTextBox;
-            */
-            System.Diagnostics.Debug.WriteLine($"タブのサイズ：{wTab.Size}");
-            System.Diagnostics.Debug.WriteLine($"テキストボックスのサイズ：{wTextForm.TextBox.Size}");
-            System.Diagnostics.Debug.WriteLine($"行番号パネルのサイズ：{wTextForm.LineNumberPanel.Size}");
-            System.Diagnostics.Debug.WriteLine($"タブのサイズ：{wTab.Size}");
-            System.Diagnostics.Debug.WriteLine($"テキストボックスのサイズ：{wTextForm.TextBox.Size}");
-            System.Diagnostics.Debug.WriteLine($"行番号パネルのサイズ：{wTextForm.LineNumberPanel.Size}");
+            wTab.Tag = wTextForm;
             wTextForm.TextBox.Focus();
         }
 
         private void AddTab(IFile vFile) {
             var wTab = new TabPage();
-            var wTextBox = new CustomTextBox();
-            wTextBox.Parent = wTab;
-            wTextBox.Text = vFile.Text;
-            wTextBox.ReadOnly = vFile.IsReadOnly;
-            wTextBox.Tag = vFile;
-            wTextBox.TextChanged += (s, e) => this.TextBox_TextChanged(s, e);
-            wTextBox.VScroll += (s, e) => this.TextBox_VSchroll(s, e);
-            wTab.Text = vFile.Name;
-            wTab.Tag = wTextBox;
             this.tbcMemo.TabPages.Add(wTab);
             this.tbcMemo.SelectedTab = wTab;
+            var wTextForm = new TextForm();
+            wTextForm.Parent = wTab;
+            wTextForm.TextBox.Text = vFile.Text;
+            wTextForm.TextBox.ReadOnly = vFile.IsReadOnly;
+            wTextForm.TextBox.Tag = vFile;
+            wTab.Text = vFile.Name;
+            wTab.Tag = wTextForm;
             // Avoid selecting all texts when setting the file text to TextBox.Text
-            wTextBox.Select(0, 0);
-        }
-        private Panel InitializeLineNumPanel() {
-            var wLineNumPanel = new Panel();
-            wLineNumPanel.Anchor = this.pnlLineNumber.Anchor;
-            wLineNumPanel.ForeColor = this.pnlLineNumber.ForeColor;
-            wLineNumPanel.BackColor = this.pnlLineNumber.BackColor;
-            wLineNumPanel.Location = this.pnlLineNumber.Location;
-            wLineNumPanel.Size = this.pnlLineNumber.Size;
-            return wLineNumPanel;
+            wTextForm.TextBox.Select(0, 0);
         }
         private bool ShouldSetFileToCurrentTab() => this.CurrentFile == null && !this.CurrentTextBox.Modified;
 
@@ -92,7 +67,7 @@ namespace MemoApp {
         private void NewFile_Click(object sender, EventArgs e) => this.AddTab();
 
         private async void Open_Click(object sender, EventArgs e) {
-            var wDialog = new OpenFileDialog() { Title = "開く" };
+            var wDialog = new OpenFileDialog() { Title = "開く", Filter = "テキストファイル|*.txt|すべてのファイル|*.*" };
             if (wDialog.ShowDialog() != DialogResult.OK) return;
             IFile wFile = new TextFile(wDialog.FileName);
             await wFile.LoadAsync();
@@ -105,7 +80,7 @@ namespace MemoApp {
 
         private async void Save_Clicked(object sender, EventArgs e) {
             if (this.CurrentFile == null) {
-                var wDialog = new SaveFileDialog() { Title = "名前を付けて保存" };
+                var wDialog = new SaveFileDialog() { Title = "名前を付けて保存", Filter = "テキストファイル|*.txt|すべてのファイル|*.*" };
                 if (wDialog.ShowDialog() != DialogResult.OK) return;
                 IFile wFile = new TextFile(wDialog.FileName);
                 wFile.Text = CurrentTextBox.Text;
@@ -165,21 +140,6 @@ namespace MemoApp {
             var wSelectedEncoding = ((ToolStripMenuItem)sender).Tag as Encoding;
             this.CurrentFile.ReloadWith(wSelectedEncoding);
             this.CurrentTextBox.Text = this.CurrentFile.Text;
-        }
-        private void TextBox_TextChanged(object sender, EventArgs e) => UpdateLineNumber();
-        private void TextBox_VSchroll(object sender, EventArgs e) => UpdateLineNumber();
-        private void UpdateLineNumber() {
-            using (Graphics g = pnlLineNumber.CreateGraphics()) {
-                g.Clear(pnlLineNumber.BackColor);
-                int wLineCount = CurrentTextBox.Lines.Length;
-                for (int wLineNumber = 0; wLineNumber < wLineCount; ++wLineNumber) {
-                    int wCharIndex = CurrentTextBox.GetFirstCharIndexFromLine(wLineNumber);
-                    if (wCharIndex == -1) break;
-                    var wPoint = CurrentTextBox.GetPositionFromCharIndex(wCharIndex);
-                    g.DrawString((wLineNumber + 1).ToString(), CurrentTextBox.Font, Brushes.Yellow, new PointF(0, wPoint.Y));
-                    if (CurrentTextBox.Height < wPoint.Y) break;
-                }
-            }
         }
     }
 }
