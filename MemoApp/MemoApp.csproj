@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\TextForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TextForm.Designer.cs">
+      <DependentUpon>TextForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EncodingDetecter.cs" />
     <Compile Include="Extentions\StringExtention.cs" />
     <Compile Include="Files\IFile.cs" />
@@ -104,6 +110,9 @@
     <Compile Include="Controls\CustomTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Controls\TextForm.resx">
+      <DependentUpon>TextForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Grep\GrepForm.resx">
       <DependentUpon>GrepForm.cs</DependentUpon>
     </EmbeddedResource>

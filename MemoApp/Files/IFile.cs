@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 
 namespace MemoApp.Files {
@@ -13,6 +10,6 @@ namespace MemoApp.Files {
         bool IsReadOnly { get; }
         Task SaveAsync();
         Task LoadAsync();
-        void ReloadWithSpecifiedEncoding(Encoding vEncoding);
+        void ReloadWith(Encoding vEncoding);
     }
 }

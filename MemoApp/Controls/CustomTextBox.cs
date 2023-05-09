@@ -17,16 +17,18 @@ namespace MemoApp {
         private const int C_LeftMargin = 4;
         private Mode FCurrentMode = Mode.Normal;
         private SearchArg FArg;
+        public int LineHeight => (int)this.Font.GetHeight();
         public CustomTextBox() {
             Initialize();
         }
         private void Initialize() {
+            this.AcceptsTab= true;
             this.AllowDrop = true;
+            this.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
             this.BackColor = System.Drawing.Color.Black;
             this.ContextMenuStrip = CreatePopupMenu();
-            this.Dock = DockStyle.Fill;
             this.DetectUrls = true;
-            this.Font = new Font("ＭＳ ゴシック", 10);
+            this.Font = new Font("ＭＳ ゴシック", 10f);
             this.ForeColor = System.Drawing.Color.White;
             this.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
             this.Multiline = true;

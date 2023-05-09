@@ -38,7 +38,7 @@ namespace MemoApp.Files {
             }
         });
 
-        public void ReloadWithSpecifiedEncoding(Encoding vEncoding) {
+        public void ReloadWith(Encoding vEncoding) {
             using (var wReader = new StreamReader(this.Path, vEncoding)) {
                 this.Text = wReader.ReadToEnd();
                 this.Encoding = vEncoding;

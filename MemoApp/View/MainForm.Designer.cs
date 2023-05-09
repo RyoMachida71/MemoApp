@@ -57,6 +57,7 @@ namespace MemoApp {
             this.UTF16MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UTF32MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShiftJISMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlLineNumber = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.tbcMemo.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -207,7 +208,7 @@ namespace MemoApp {
             // 
             this.検索ToolStripMenuItem.Name = "検索ToolStripMenuItem";
             this.検索ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.検索ToolStripMenuItem.Text = "検索";
             this.検索ToolStripMenuItem.Click += new System.EventHandler(this.Search_Click);
             // 
@@ -215,14 +216,14 @@ namespace MemoApp {
             // 
             this.置換ToolStripMenuItem.Name = "置換ToolStripMenuItem";
             this.置換ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.置換ToolStripMenuItem.Text = "置換";
             this.置換ToolStripMenuItem.Click += new System.EventHandler(this.Replace_Click);
             // 
             // grepToolStripMenuItem
             // 
             this.grepToolStripMenuItem.Name = "grepToolStripMenuItem";
-            this.grepToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.grepToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.grepToolStripMenuItem.Text = "grep";
             this.grepToolStripMenuItem.Click += new System.EventHandler(this.Grep_Click);
             // 
@@ -242,11 +243,10 @@ namespace MemoApp {
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.pnlLineNumber);
             this.tabPage1.Controls.Add(this.customTextBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Size = new System.Drawing.Size(925, 437);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Tag = this.customTextBox1;
@@ -255,19 +255,24 @@ namespace MemoApp {
             // 
             // customTextBox1
             // 
+            this.customTextBox1.AcceptsTab = true;
             this.customTextBox1.AllowDrop = true;
+            this.customTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.customTextBox1.BackColor = System.Drawing.Color.Black;
-            this.customTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.customTextBox1.Font = new System.Drawing.Font("ＭＳ ゴシック", 10F);
             this.customTextBox1.ForeColor = System.Drawing.Color.White;
-            this.customTextBox1.Location = new System.Drawing.Point(4, 3);
+            this.customTextBox1.Location = new System.Drawing.Point(41, 0);
             this.customTextBox1.Name = "customTextBox1";
             this.customTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.customTextBox1.Size = new System.Drawing.Size(917, 431);
+            this.customTextBox1.Size = new System.Drawing.Size(884, 437);
             this.customTextBox1.TabIndex = 0;
             this.customTextBox1.Text = "";
             this.customTextBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
             this.customTextBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
+            this.customTextBox1.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.customTextBox1.VScroll += new System.EventHandler(this.TextBox_VSchroll);
             // 
             // statusStripMemo
             // 
@@ -335,6 +340,17 @@ namespace MemoApp {
             this.ShiftJISMenuItem.Text = "日本語(Shift-JIS)";
             this.ShiftJISMenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
             // 
+            // pnlLineNumber
+            // 
+            this.pnlLineNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlLineNumber.BackColor = System.Drawing.Color.Black;
+            this.pnlLineNumber.ForeColor = System.Drawing.Color.White;
+            this.pnlLineNumber.Location = new System.Drawing.Point(0, 0);
+            this.pnlLineNumber.Name = "pnlLineNumber";
+            this.pnlLineNumber.Size = new System.Drawing.Size(41, 441);
+            this.pnlLineNumber.TabIndex = 1;
+            // 
             // Memo
             // 
             this.AllowDrop = true;
@@ -349,6 +365,7 @@ namespace MemoApp {
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Memo";
             this.Text = "メモ";
+            this.Load += new System.EventHandler(this.Memo_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
             this.menuStrip1.ResumeLayout(false);
@@ -394,6 +411,7 @@ namespace MemoApp {
         private System.Windows.Forms.ToolStripMenuItem UTF16MenuItem;
         private System.Windows.Forms.ToolStripMenuItem UTF32MenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShiftJISMenuItem;
+        private System.Windows.Forms.Panel pnlLineNumber;
     }
 }
 
