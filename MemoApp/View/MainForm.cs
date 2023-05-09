@@ -21,7 +21,8 @@ namespace MemoApp {
             var wTextForm = new TextForm();
             this.CurrentTab.Controls.Add(wTextForm);
             this.CurrentTab.Tag = wTextForm;
-            this.Resize += (s, e) => Memo_Resize(s, e);
+            this.Resize += Memo_Resize;
+            this.tbcMemo.SelectedIndexChanged += tbcMemo_SelectedIndexChanged;
         }
         /// <summary>
         /// Set default focus on textbox when loading
@@ -30,23 +31,23 @@ namespace MemoApp {
             this.ActiveControl = this.CurrentTextBox;
         }
         private void Memo_Resize(object sender, EventArgs e) => ((TextForm)CurrentTab.Tag).UpdateLineNumber();
+        private void tbcMemo_SelectedIndexChanged(object sender, EventArgs e) => ((TextForm)CurrentTab.Tag).UpdateLineNumber();
         private void AddTab(string vTitle = C_TitleForNew) {
             var wTab = new TabPage();
             this.tbcMemo.TabPages.Add(wTab);
-            this.tbcMemo.SelectedTab = wTab;
             var wTextForm = new TextForm();
             wTextForm.Parent = wTab;
             wTextForm.DragDrop += (s, e) => this.File_DragDrop(s, e);
             wTextForm.DragEnter += (s, e) => this.File_DragEnter(s, e);
             wTab.Text = vTitle;
             wTab.Tag = wTextForm;
+            this.tbcMemo.SelectedTab = wTab;
             wTextForm.TextBox.Focus();
         }
 
         private void AddTab(IFile vFile) {
             var wTab = new TabPage();
             this.tbcMemo.TabPages.Add(wTab);
-            this.tbcMemo.SelectedTab = wTab;
             var wTextForm = new TextForm();
             wTextForm.Parent = wTab;
             wTextForm.TextBox.Text = vFile.Text;
@@ -54,6 +55,7 @@ namespace MemoApp {
             wTextForm.TextBox.Tag = vFile;
             wTab.Text = vFile.Name;
             wTab.Tag = wTextForm;
+            this.tbcMemo.SelectedTab = wTab;
             // Avoid selecting all texts when setting the file text to TextBox.Text
             wTextForm.TextBox.Select(0, 0);
         }
