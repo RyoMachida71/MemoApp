@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.IO;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MemoApp.Files {
@@ -34,14 +29,18 @@ namespace MemoApp.Files {
 
         public Task LoadAsync() => Task.Run(() => {
             using (var wReader = new StreamReader(this.Path, this.Encoding)) {
-                this.Text = wReader.ReadToEnd();
+                while (!wReader.EndOfStream) {
+                    this.Text += wReader.ReadLine();
+                }
             }
         });
 
         public void ReloadWith(Encoding vEncoding) {
             using (var wReader = new StreamReader(this.Path, vEncoding)) {
-                this.Text = wReader.ReadToEnd();
                 this.Encoding = vEncoding;
+                while (!wReader.EndOfStream) {
+                    this.Text += wReader.ReadLine();
+                }
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿
-
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace MemoApp.Search {
     public class SearchController {
@@ -13,13 +11,19 @@ namespace MemoApp.Search {
             FSearchTaget.KeyDown += Key_Down;
         }
         public void ShowSearchForm() {
-            FCurrentMode = Mode.Search;
             var wForm = new SearchForm(FSearcher);
+            wForm.FormClosed += (s, e) => {
+                FCurrentMode = Mode.Search;
+                // create a new status bar and disable existing status
+            };
             wForm.Show();
         }
         public void ShowReplaceForm() {
-            FCurrentMode = Mode.Replace;
             var wForm = new ReplaceForm(FSearcher);
+            wForm.FormClosed += (s, e) => {
+                FCurrentMode = Mode.Replace;
+                // create a new status bar and disable existing status
+            };
             wForm.Show();
         }
         private void Key_Down(object sender, KeyEventArgs e) {

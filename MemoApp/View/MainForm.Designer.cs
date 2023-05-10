@@ -232,7 +232,7 @@ namespace MemoApp {
             this.tbcMemo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbcMemo.Name = "tbcMemo";
             this.tbcMemo.SelectedIndex = 0;
-            this.tbcMemo.Size = new System.Drawing.Size(933, 464);
+            this.tbcMemo.Size = new System.Drawing.Size(933, 440);
             this.tbcMemo.TabIndex = 1;
             this.tbcMemo.DragDrop += new System.Windows.Forms.DragEventHandler(this.File_DragDrop);
             this.tbcMemo.DragEnter += new System.Windows.Forms.DragEventHandler(this.File_DragEnter);
@@ -241,7 +241,7 @@ namespace MemoApp {
             // 
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(925, 437);
+            this.tabPage1.Size = new System.Drawing.Size(925, 413);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "新規";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -318,9 +318,9 @@ namespace MemoApp {
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 488);
-            this.Controls.Add(this.statusStripMemo);
             this.Controls.Add(this.tbcMemo);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.statusStripMemo);
             this.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

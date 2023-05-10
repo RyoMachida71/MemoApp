@@ -10,6 +10,7 @@ using System.Windows.Forms;
 namespace MemoApp {
     public partial class Memo : Form {
         private const string C_TitleForNew = "新規";
+        private SearchController FSearchController;
         private TabPage CurrentTab => this.tbcMemo.SelectedTab;
         private CustomTextBox CurrentTextBox => ((TextForm)CurrentTab.Tag).TextBox;
         private IFile CurrentFile {
@@ -106,12 +107,12 @@ namespace MemoApp {
         }
 
         private void Search_Click(object sender, EventArgs e) {
-            var wController = new SearchController(this.CurrentTextBox);
-            wController.ShowSearchForm();
+            if (FSearchController == null) FSearchController = new SearchController(this.CurrentTextBox);
+            FSearchController.ShowSearchForm();
         }
         private void Replace_Click(object sender, EventArgs e) {
-            var wController = new SearchController(this.CurrentTextBox);
-            wController.ShowReplaceForm();
+            if (FSearchController == null) FSearchController = new SearchController(this.CurrentTextBox);
+            FSearchController.ShowReplaceForm();
         }
         private void Grep_Click(object sender, EventArgs e) {
             var wGrepForm = new GrepForm(async (GrepSearch vGrep) => {
