@@ -106,12 +106,12 @@ namespace MemoApp {
         }
 
         private void Search_Click(object sender, EventArgs e) {
-            var wSearchForm = new SearchForm(this.CurrentTextBox);
-            wSearchForm.Show();
+            var wController = new SearchController(this.CurrentTextBox);
+            wController.ShowSearchForm();
         }
         private void Replace_Click(object sender, EventArgs e) {
-            var wReplaceForm = new ReplaceForm(this.CurrentTextBox);
-            wReplaceForm.Show();
+            var wController = new SearchController(this.CurrentTextBox);
+            wController.ShowReplaceForm();
         }
         private void Grep_Click(object sender, EventArgs e) {
             var wGrepForm = new GrepForm(async (GrepSearch vGrep) => {

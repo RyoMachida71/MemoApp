@@ -7,5 +7,6 @@
         int ReplaceForward();
         int ReplaceBackward();
         int ReplaceAll();
+        void EndSearch();
     }
 }

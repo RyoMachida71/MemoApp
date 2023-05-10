@@ -1,22 +1,13 @@
 ﻿using MemoApp.Search;
 using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace MemoApp {
-    public enum Mode {
-        Normal,
-        Search,
-        Replace
-    }
     [ToolboxItem(true)]
-    public class CustomTextBox : RichTextBox, ISearcher {
+    public class CustomTextBox : RichTextBox, ISearchTarget {
         private const int C_LeftMargin = 4;
-        private Mode FCurrentMode = Mode.Normal;
-        private SearchArg FArg;
         public CustomTextBox() {
             Initialize();
         }
@@ -35,7 +26,6 @@ namespace MemoApp {
             this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             this.SelectionIndent = C_LeftMargin;
             this.WordWrap = false;
-            this.KeyDown += this.KeyPressed;
         }
         private ContextMenuStrip CreatePopupMenu() {
             var wPopupMenu = new ContextMenuStrip();
@@ -61,97 +51,5 @@ namespace MemoApp {
             }
             return wPopupMenu;
         }
-        public void PrepareSearch(SearchArg vArg) {
-            FCurrentMode = vArg.Mode;
-            FArg = vArg;
-        }
-        public int SearchForward() {
-            this.Focus();
-            var wOffset = this.SelectedText.Equals(FArg.SearchText, GetStringComparison(FArg.IsDistinguishCase)) ? 1: 0;
-            var wSearchStartIndex = this.Text.IndexOf(FArg.SearchText, this.SelectionStart + wOffset, GetStringComparison(FArg.IsDistinguishCase));
-            if (wSearchStartIndex >= 0) this.Select(wSearchStartIndex, FArg.SearchText.Length);
-            return wSearchStartIndex;
-        }
-        public int SearchBackward() {
-            this.Focus();
-            var wSearchStartIndex = (this.SelectionStart + FArg.SearchText.Length - 1) - 1;
-            if (wSearchStartIndex < 0) return -1;
-            if (wSearchStartIndex > this.Text.Length) wSearchStartIndex = this.Text.Length;
-            var wIndex = this.Text.LastIndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsDistinguishCase));
-            if (wIndex >= 0) this.Select(wIndex, FArg.SearchText.Length);
-            return wIndex;
-        }
-        public int SearchAll() {
-            this.FCurrentMode = Mode.Search;
-            var wIndexList = new List<int>();
-            var wSearchStartIndex = 0;
-            while (wSearchStartIndex < this.TextLength) {
-                var wHitIndex = this.Text.IndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsDistinguishCase));
-                if (wHitIndex == -1) break;
-                wIndexList.Add(wHitIndex);
-                wSearchStartIndex = ++wHitIndex;
-            }
-            if (wIndexList.Count == 0) {
-                MessageBox.Show("検索文字列にヒットしませんでした。");
-                return -1;
-            }
-            foreach (var wIndex in wIndexList) {
-                this.SelectionStart = wIndex;
-                this.SelectionLength = FArg.SearchText.Length;
-                this.SelectionBackColor = Color.Red;
-            }
-            return wSearchStartIndex;
-        }
-        public int ReplaceForward() {
-            this.Focus();
-            if (this.SelectedText == FArg.SearchText) this.SelectedText = FArg.ReplaceText;
-            var wIndex = this.SearchForward();
-            return wIndex;
-        }
-        public int ReplaceBackward() {
-            this.Focus();
-            if (this.SelectedText == FArg.SearchText) {
-                int wOldPosition = this.SelectionStart;
-                this.SelectedText = FArg.ReplaceText;
-                this.SelectionStart = wOldPosition;
-            }
-            var wIndex = this.SearchBackward();
-            return wIndex;
-        }
-        public int ReplaceAll() {
-            int wIndex = this.SelectionStart = 0;
-            while (wIndex >= 0) {
-                wIndex = this.ReplaceForward();
-            }
-            return wIndex;
-        }
-
-        private StringComparison GetStringComparison(bool vIsDistinguishCase) => vIsDistinguishCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
-
-        private void KeyPressed(object sender, KeyEventArgs e) {
-            switch (e.KeyCode) {
-                case Keys.Escape:
-                    ToNormalMode();
-                    break;
-                case Keys.F3:
-                    if (FCurrentMode == Mode.Search) this.SearchForward();
-                    else if (FCurrentMode == Mode.Replace) this.ReplaceForward();
-                    break;
-                case Keys.F4:
-                    if (FCurrentMode == Mode.Search) this.SearchBackward();
-                    else if (FCurrentMode == Mode.Replace) this.ReplaceBackward();
-                    break;
-            }
-        }
-        private void ToNormalMode() {
-            if (this.FCurrentMode != Mode.Normal) {
-                var wCaret = this.SelectionStart;
-                this.SelectAll();
-                this.SelectionBackColor = this.BackColor;
-                this.Select(wCaret, 0);
-                this.FCurrentMode = Mode.Normal;
-            }
-        }
-        
     }
 }

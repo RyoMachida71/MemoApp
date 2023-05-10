@@ -86,6 +86,8 @@
       <DependentUpon>BasicSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\ISearcher.cs" />
+    <Compile Include="Search\ISearchTarget.cs" />
+    <Compile Include="Search\Mode.cs" />
     <Compile Include="Search\ReplaceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +95,8 @@
       <DependentUpon>ReplaceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\SearchArg.cs" />
+    <Compile Include="Search\SearchController.cs" />
+    <Compile Include="Search\Searcher.cs" />
     <Compile Include="Search\SearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
