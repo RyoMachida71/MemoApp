@@ -114,6 +114,7 @@ namespace MemoApp {
             if (FSearchController == null) FSearchController = new SearchController(this.CurrentTextBox);
             FSearchController.ShowReplaceForm();
         }
+
         private void Grep_Click(object sender, EventArgs e) {
             var wGrepForm = new GrepForm(async (GrepSearch vGrep) => {
                 this.AddTab("grep");

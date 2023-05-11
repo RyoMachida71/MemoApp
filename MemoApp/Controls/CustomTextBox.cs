@@ -25,6 +25,7 @@ namespace MemoApp {
             this.Modified = false;
             this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             this.SelectionIndent = C_LeftMargin;
+            this.SelectionBackColor = Color.Red;
             this.WordWrap = false;
         }
         private ContextMenuStrip CreatePopupMenu() {
@@ -50,6 +51,13 @@ namespace MemoApp {
                 wPopupMenu.Items.Add(wMenuItem);
             }
             return wPopupMenu;
+        }
+        public void RefreshSelection() {
+            var wOriginalPosition = this.SelectionStart;
+            this.SelectAll();
+            this.SelectionBackColor = this.BackColor;
+            this.Select(wOriginalPosition, 0);
+            this.SelectionBackColor = Color.Red;
         }
     }
 }

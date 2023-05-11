@@ -2,27 +2,26 @@
 
 namespace MemoApp.Search {
     public class SearchController {
-        ISearchTarget FSearchTaget;
+        ISearchTarget FSearchTarget;
         ISearcher FSearcher;
         Mode FCurrentMode;
         public SearchController(ISearchTarget vSearchTarget) {
             FSearcher = new Searcher(vSearchTarget);
-            FSearchTaget = vSearchTarget;
-            FSearchTaget.KeyDown += Key_Down;
+            FSearchTarget = vSearchTarget;
         }
         public void ShowSearchForm() {
             var wForm = new SearchForm(FSearcher);
+            FSearchTarget.KeyDown += Key_Down;
             wForm.FormClosed += (s, e) => {
                 FCurrentMode = Mode.Search;
-                // create a new status bar and disable existing status
             };
             wForm.Show();
         }
         public void ShowReplaceForm() {
             var wForm = new ReplaceForm(FSearcher);
+            FSearchTarget.KeyDown += Key_Down;
             wForm.FormClosed += (s, e) => {
                 FCurrentMode = Mode.Replace;
-                // create a new status bar and disable existing status
             };
             wForm.Show();
         }
@@ -43,8 +42,8 @@ namespace MemoApp.Search {
         }
         private void ToNormalMode() {
             FCurrentMode = Mode.Normal;
-            FSearchTaget.KeyDown -= Key_Down;
-            FSearcher.EndSearch();
+            FSearchTarget.KeyDown -= Key_Down;
+            FSearchTarget.RefreshSelection();
         }
     }
 }

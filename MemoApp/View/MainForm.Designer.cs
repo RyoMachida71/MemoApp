@@ -49,7 +49,6 @@ namespace MemoApp {
             this.tbcMemo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.statusStripMemo = new System.Windows.Forms.StatusStrip();
-            this.statusLabelSavedMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripButtonEncodingKind = new System.Windows.Forms.ToolStripSplitButton();
             this.UTF8MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UTF16MenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -249,21 +248,12 @@ namespace MemoApp {
             // statusStripMemo
             // 
             this.statusStripMemo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabelSavedMessage,
             this.toolStripButtonEncodingKind});
             this.statusStripMemo.Location = new System.Drawing.Point(0, 464);
             this.statusStripMemo.Name = "statusStripMemo";
             this.statusStripMemo.Size = new System.Drawing.Size(933, 24);
             this.statusStripMemo.TabIndex = 2;
             this.statusStripMemo.Text = "statusStrip1";
-            // 
-            // statusLabelSavedMessage
-            // 
-            this.statusLabelSavedMessage.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.statusLabelSavedMessage.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.statusLabelSavedMessage.Name = "statusLabelSavedMessage";
-            this.statusLabelSavedMessage.Size = new System.Drawing.Size(91, 19);
-            this.statusLabelSavedMessage.Text = "ファイルは未保存";
             // 
             // toolStripButtonEncodingKind
             // 
@@ -364,7 +354,6 @@ namespace MemoApp {
         private System.Windows.Forms.ToolStripMenuItem 置換ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grepToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStripMemo;
-        private System.Windows.Forms.ToolStripStatusLabel statusLabelSavedMessage;
         private System.Windows.Forms.ToolStripSplitButton toolStripButtonEncodingKind;
         private System.Windows.Forms.ToolStripMenuItem UTF8MenuItem;
         private System.Windows.Forms.ToolStripMenuItem UTF16MenuItem;

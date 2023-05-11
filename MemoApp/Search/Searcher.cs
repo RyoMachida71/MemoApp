@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace MemoApp.Search {
     internal class Searcher : ISearcher {
@@ -69,12 +67,6 @@ namespace MemoApp.Search {
             }
             FSearchTarget.Select(wOriginalPosition, 0);
             return wIndex;
-        }
-        public void EndSearch() {
-            var wOriginalPosition = FSearchTarget.SelectionStart;
-            FSearchTarget.SelectAll();
-            FSearchTarget.SelectionBackColor = FSearchTarget.BackColor;
-            FSearchTarget.Select(wOriginalPosition, 0);
         }
 
         private StringComparison GetStringComparison(bool vIsDistinguishCase) => vIsDistinguishCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
