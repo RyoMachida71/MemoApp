@@ -50,7 +50,7 @@
             this.lblReplace.Location = new System.Drawing.Point(20, 53);
             this.lblReplace.Name = "lblReplace";
             this.lblReplace.Size = new System.Drawing.Size(29, 12);
-            this.lblReplace.TabIndex = 1;
+            this.lblReplace.TabIndex = 2;
             this.lblReplace.Text = "置換";
             // 
             // tbxSearch
@@ -58,7 +58,7 @@
             this.tbxSearch.Location = new System.Drawing.Point(68, 24);
             this.tbxSearch.Name = "tbxSearch";
             this.tbxSearch.Size = new System.Drawing.Size(189, 19);
-            this.tbxSearch.TabIndex = 2;
+            this.tbxSearch.TabIndex = 1;
             // 
             // tbxReplace
             // 
@@ -72,7 +72,7 @@
             this.btnAll.Location = new System.Drawing.Point(306, 84);
             this.btnAll.Name = "btnAll";
             this.btnAll.Size = new System.Drawing.Size(75, 23);
-            this.btnAll.TabIndex = 9;
+            this.btnAll.TabIndex = 6;
             this.btnAll.UseVisualStyleBackColor = true;
             this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
             // 
@@ -81,7 +81,7 @@
             this.btnForward.Location = new System.Drawing.Point(306, 22);
             this.btnForward.Name = "btnForward";
             this.btnForward.Size = new System.Drawing.Size(75, 23);
-            this.btnForward.TabIndex = 8;
+            this.btnForward.TabIndex = 4;
             this.btnForward.UseVisualStyleBackColor = true;
             this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
             // 
@@ -90,7 +90,7 @@
             this.btnBackward.Location = new System.Drawing.Point(306, 55);
             this.btnBackward.Name = "btnBackward";
             this.btnBackward.Size = new System.Drawing.Size(75, 23);
-            this.btnBackward.TabIndex = 7;
+            this.btnBackward.TabIndex = 5;
             this.btnBackward.UseVisualStyleBackColor = true;
             this.btnBackward.Click += new System.EventHandler(this.btnBackward_Click);
             // 
@@ -100,7 +100,7 @@
             this.btnClose.Location = new System.Drawing.Point(306, 163);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 13;
+            this.btnClose.TabIndex = 9;
             this.btnClose.Text = "閉じる";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -111,17 +111,17 @@
             this.chbRegularExpression.Location = new System.Drawing.Point(18, 163);
             this.chbRegularExpression.Name = "chbRegularExpression";
             this.chbRegularExpression.Size = new System.Drawing.Size(72, 16);
-            this.chbRegularExpression.TabIndex = 15;
+            this.chbRegularExpression.TabIndex = 8;
             this.chbRegularExpression.Text = "正規表現";
             this.chbRegularExpression.UseVisualStyleBackColor = true;
             // 
-            // chbIgnoreCase
+            // chbDistinguishCase
             // 
             this.chbDistinguishCase.AutoSize = true;
             this.chbDistinguishCase.Location = new System.Drawing.Point(18, 131);
             this.chbDistinguishCase.Name = "chbDistinguishCase";
             this.chbDistinguishCase.Size = new System.Drawing.Size(154, 16);
-            this.chbDistinguishCase.TabIndex = 14;
+            this.chbDistinguishCase.TabIndex = 7;
             this.chbDistinguishCase.Text = "大文字/小文字を区別する";
             this.chbDistinguishCase.UseVisualStyleBackColor = true;
             // 

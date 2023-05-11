@@ -32,24 +32,17 @@ namespace MemoApp.Search {
         }
 
         public int SearchAll() {
-            var wIndexList = new List<int>();
-            var wSearchStartIndex = 0;
-            while (wSearchStartIndex < FSearchTarget.TextLength) {
-                var wHitIndex = FSearchTarget.Text.IndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsDistinguishCase));
-                if (wHitIndex == -1) break;
-                wIndexList.Add(wHitIndex);
-                wSearchStartIndex = ++wHitIndex;
-            }
-            if (wIndexList.Count == 0) {
-                MessageBox.Show("検索文字列にヒットしませんでした。");
-                return -1;
-            }
-            foreach (var wIndex in wIndexList) {
+            var wOriginalPosition = FSearchTarget.SelectionStart;
+            int wIndex = FSearchTarget.SelectionStart = 0;
+            while (true) {
+                wIndex = this.SearchForward();
+                if (wIndex == -1) break;
                 FSearchTarget.SelectionStart = wIndex;
                 FSearchTarget.SelectionLength = FArg.SearchText.Length;
                 FSearchTarget.SelectionBackColor = Color.Red;
             }
-            return wSearchStartIndex;
+            FSearchTarget.Select(wOriginalPosition, 0);
+            return wIndex;
         }
 
         public int ReplaceForward() {
@@ -69,17 +62,19 @@ namespace MemoApp.Search {
         }
 
         public int ReplaceAll() {
+            var wOriginalPosition = FSearchTarget.SelectionStart;
             int wIndex = FSearchTarget.SelectionStart = 0;
             while (wIndex >= 0) {
                 wIndex = this.ReplaceForward();
             }
+            FSearchTarget.Select(wOriginalPosition, 0);
             return wIndex;
         }
         public void EndSearch() {
-            var wCaret = FSearchTarget.SelectionStart;
+            var wOriginalPosition = FSearchTarget.SelectionStart;
             FSearchTarget.SelectAll();
             FSearchTarget.SelectionBackColor = FSearchTarget.BackColor;
-            FSearchTarget.Select(wCaret, 0);
+            FSearchTarget.Select(wOriginalPosition, 0);
         }
 
         private StringComparison GetStringComparison(bool vIsDistinguishCase) => vIsDistinguishCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
