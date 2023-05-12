@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Drawing;
 
 namespace MemoApp.Search {
-    internal class Searcher : ISearcher {
+    public class Searcher : ISearcher {
         private ISearchTarget FSearchTarget;
         private SearchArg FArg;
 

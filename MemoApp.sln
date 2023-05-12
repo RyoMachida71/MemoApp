@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoApp", "MemoApp\MemoApp.csproj", "{ACCB2912-B3C5-4425-89BE-6720C7F07617}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{AC7BA91F-C705-4B77-88EE-A217E02F909C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ACCB2912-B3C5-4425-89BE-6720C7F07617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACCB2912-B3C5-4425-89BE-6720C7F07617}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACCB2912-B3C5-4425-89BE-6720C7F07617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC7BA91F-C705-4B77-88EE-A217E02F909C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC7BA91F-C705-4B77-88EE-A217E02F909C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC7BA91F-C705-4B77-88EE-A217E02F909C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC7BA91F-C705-4B77-88EE-A217E02F909C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
