@@ -37,7 +37,7 @@ namespace MemoApp.Search {
                 if (wIndex == -1) break;
                 FSearchTarget.SelectionStart = wIndex;
                 FSearchTarget.SelectionLength = FArg.SearchText.Length;
-                FSearchTarget.SelectionBackColor = Color.Red;
+                FSearchTarget.HighlightSelectedText();
             }
             FSearchTarget.Select(wOriginalPosition, 0);
             return wIndex;

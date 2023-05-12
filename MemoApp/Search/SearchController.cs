@@ -43,7 +43,7 @@ namespace MemoApp.Search {
         private void ToNormalMode() {
             FCurrentMode = Mode.Normal;
             FSearchTarget.KeyDown -= Key_Down;
-            FSearchTarget.RefreshSelection();
+            FSearchTarget.DeselectAll();
         }
     }
 }

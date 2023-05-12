@@ -7,9 +7,9 @@ namespace MemoApp.Search {
         string SelectedText { get; set; }
         int SelectionStart { get; set; }
         int SelectionLength { get; set; }
-        Color SelectionBackColor { get; set; }
         void Select(int vStart, int vLength);
-        void RefreshSelection();
+        void HighlightSelectedText();
+        void DeselectAll();
         event KeyEventHandler KeyDown;
     }
 }

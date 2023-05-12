@@ -1,5 +1,6 @@
 ﻿using MemoApp.Search;
 using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -25,7 +26,6 @@ namespace MemoApp {
             this.Modified = false;
             this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             this.SelectionIndent = C_LeftMargin;
-            this.SelectionBackColor = Color.Red;
             this.WordWrap = false;
         }
         private ContextMenuStrip CreatePopupMenu() {
@@ -52,7 +52,10 @@ namespace MemoApp {
             }
             return wPopupMenu;
         }
-        public void RefreshSelection() {
+        public void HighlightSelectedText() {
+            this.SelectionBackColor = Color.Red;
+        }
+        void ISearchTarget.DeselectAll() {
             var wOriginalPosition = this.SelectionStart;
             this.SelectAll();
             this.SelectionBackColor = this.BackColor;
