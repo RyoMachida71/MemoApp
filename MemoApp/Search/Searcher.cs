@@ -20,10 +20,7 @@ namespace MemoApp.Search {
         }
 
         public int SearchBackward() {
-            var wSearchStartIndex = (FSearchTarget.SelectionStart + FArg.SearchText.Length - 1) - 1;
-            if (wSearchStartIndex < 0) return -1;
-            if (wSearchStartIndex > FSearchTarget.Text.Length) wSearchStartIndex = FSearchTarget.Text.Length;
-            var wIndex = FSearchTarget.Text.LastIndexOf(FArg.SearchText, wSearchStartIndex, GetStringComparison(FArg.IsDistinguishCase));
+            var wIndex = FSearchTarget.Text.LastIndexOf(FArg.SearchText, FSearchTarget.SelectionStart, GetStringComparison(FArg.IsDistinguishCase));
             if (wIndex >= 0) FSearchTarget.Select(wIndex, FArg.SearchText.Length);
             return wIndex;
         }
