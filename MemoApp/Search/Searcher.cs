@@ -27,9 +27,9 @@ namespace MemoApp.Search {
 
         public int SearchAll() {
             var wOriginalPosition = FSearchTarget.SelectionStart;
-            int wIndex = FSearchTarget.SelectionStart = 0;
+            int wIndex = FSearchTarget.SelectionStart = FSearchTarget.Text.Length - 1;
             while (true) {
-                wIndex = this.SearchForward();
+                wIndex = this.SearchBackward();
                 if (wIndex == -1) break;
                 FSearchTarget.SelectionStart = wIndex;
                 FSearchTarget.SelectionLength = FArg.SearchText.Length;
@@ -57,9 +57,9 @@ namespace MemoApp.Search {
 
         public int ReplaceAll() {
             var wOriginalPosition = FSearchTarget.SelectionStart;
-            int wIndex = FSearchTarget.SelectionStart = 0;
+            int wIndex = FSearchTarget.SelectionStart = FSearchTarget.Text.Length - 1;
             while (wIndex >= 0) {
-                wIndex = this.ReplaceForward();
+                wIndex = this.ReplaceBackward();
             }
             FSearchTarget.Select(wOriginalPosition, 0);
             return wIndex;

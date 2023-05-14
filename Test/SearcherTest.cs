@@ -34,7 +34,7 @@ namespace Test
         }
         [Test]
         public void Test_SearchForwardShouldReturnHitIndexes() {
-            var wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 0, 0);
+            ISearchTarget wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 0, 0);
             ISearcher wSearcher = new Searcher(wSearchTarget);
             wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
             var wResults = new List<int>();
@@ -66,6 +66,14 @@ namespace Test
                 wResults.Add(wSearcher.SearchBackward());
             }
             Assert.AreEqual(new List<int> { 13, 6 }, wResults);
+        }
+        [Test]
+        public void Test_SearchAllShouldReturnFirstHitIndexKeepingSelectionPosition() {
+            ISearchTarget wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttesttest", "", 10, 0);
+            ISearcher wSearcher = new Searcher(wSearchTarget);
+            wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
+            Assert.AreEqual(-1, wSearcher.SearchAll());
+            Assert.AreEqual(10, wSearchTarget.SelectionStart);
         }
     }
 }
