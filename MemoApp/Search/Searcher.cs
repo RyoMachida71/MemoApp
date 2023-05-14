@@ -48,9 +48,9 @@ namespace MemoApp.Search {
         public int ReplaceBackward() {
             var wIndex = this.SearchBackward();
             if (FSearchTarget.SelectedText == FArg.SearchText) {
-                int wOldPosition = FSearchTarget.SelectionStart;
+                int wOriginalPosition = FSearchTarget.SelectionStart;
                 FSearchTarget.SelectedText = FArg.ReplaceText;
-                FSearchTarget.SelectionStart = wOldPosition;
+                FSearchTarget.SelectionStart = wOriginalPosition;
             }
             return wIndex;
         }

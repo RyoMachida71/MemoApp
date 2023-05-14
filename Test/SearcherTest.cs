@@ -32,17 +32,18 @@ namespace Test
             wSearcher.PrepareSearch(SearchArg.CreateSearch(vSearchText, vIsDistinguishCase));
             Assert.AreEqual(vExpected, wSearcher.SearchForward());
         }
+
         [Test]
         public void Test_SearchForwardShouldReturnHitIndexes() {
             ISearchTarget wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 0, 0);
             ISearcher wSearcher = new Searcher(wSearchTarget);
             wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
-            var wResults = new List<int>();
             int wSearchCount = 2;
+            var wResults = new int[wSearchCount];
             for (int i = 0; i < wSearchCount; ++i) {
-                wResults.Add(wSearcher.SearchForward());
+                wResults[i] = wSearcher.SearchForward();
             }
-            Assert.AreEqual(new List<int> { 6, 13 }, wResults);
+            Assert.AreEqual(new int[] { 6, 13 }, wResults);
         }
         [TestCase(13, "test", "aaa\nbbtestbb\tTest", "", 16, 0, false, Description = "ignore case")]
         [TestCase(6, "test", "aaa\nbbtestbb\tTest", "", 16, 0, true, Description = "distinguish case")]
@@ -60,20 +61,51 @@ namespace Test
             var wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 16, 0);
             ISearcher wSearcher = new Searcher(wSearchTarget);
             wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
-            var wResults = new List<int>();
             int wSearchCount = 2;
+            var wResults = new int[wSearchCount];
             for (int i = 0; i < wSearchCount; ++i) {
-                wResults.Add(wSearcher.SearchBackward());
+                wResults[i] = wSearcher.SearchBackward();
             }
-            Assert.AreEqual(new List<int> { 13, 6 }, wResults);
+            Assert.AreEqual(new int[] { 13, 6 }, wResults);
         }
         [Test]
-        public void Test_SearchAllShouldReturnFirstHitIndexKeepingSelectionPosition() {
+        public void Test_SearchAllShouldReturnFirstSmallestIndexKeepingSelectionPosition() {
             ISearchTarget wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttesttest", "", 10, 0);
             ISearcher wSearcher = new Searcher(wSearchTarget);
             wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
             Assert.AreEqual(-1, wSearcher.SearchAll());
             Assert.AreEqual(10, wSearchTarget.SelectionStart);
         }
+
+        [TestCase(1, new string[] { "aaa" }, Description = "invoke one time")]
+        [TestCase(5, new string[] { "aaa", "aaa", "aaa", "aaa", "aaa" }, Description = "invoke five times")]
+        public void Test_ReplaceForward(int vReplaceCount, string[] vExpected) {
+            var wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest  testthintesbbbtestyuuuuuutest", "", 0, 0);
+            ISearcher wSearcher = new Searcher(wSearchTarget);
+            wSearcher.PrepareSearch(SearchArg.CreateReplace("test", "aaa", false));
+            var wResults = new string[vReplaceCount];
+            for (int i = 0; i < vReplaceCount; ++i) {
+                wSearcher.ReplaceForward();
+                wResults[i] = wSearchTarget.SelectedText;
+            }
+            Assert.AreEqual(vExpected, wResults);
+        }
+
+        [TestCase(1, new string[] { "aaa" }, Description = "invoke one time")]
+        [TestCase(5, new string[] { "aaa", "aaa", "aaa", "aaa", "aaa" }, Description = "invoke five times")]
+        public void Test_ReplaceBackward(int vReplaceCount, string[] vExpected) {
+            var wText = "aaa\nbbtestbb\ttest  testthintesbbbtestyuuuuuutest";
+            var wSearchTarget = MakeTestObject(wText, "", wText.Length - 1, 0);
+            ISearcher wSearcher = new Searcher(wSearchTarget);
+            wSearcher.PrepareSearch(SearchArg.CreateReplace("test", "aaa", false));
+            var wResults = new string[vReplaceCount];
+            for (int i = 0; i < vReplaceCount; ++i) {
+                wSearcher.ReplaceBackward();
+                wResults[i] = wSearchTarget.SelectedText;
+            }
+            Assert.AreEqual(vExpected, wResults);
+        }
+
+        // no need for ReplaceAll() test code because Test_ReplaceBackward guarantees all replacements work properly
     }
 }
