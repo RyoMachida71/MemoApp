@@ -1,27 +1,23 @@
 ﻿using MemoApp.Search;
-using NUnit.Framework;
 using Moq;
-using NUnit.Framework.Constraints;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Test
 {
-    /// <summary>
-    /// 検索・置換テスト
-    /// 観点
-    // 1文字目から検索してヒットした場合(大文字小文字を区別する・しない、日本語)
-    // 文字列の途中から検索してヒットした場合
-    // 文字列の途中から検索してヒットしなかった場合(検索対象の文字列にヒットする文字列が含まれていること)
-    // 検索対象の文字列にヒットする文字列が複数あり、すでにそのうちの1つがSelectedTextであれば、次の文字列にヒットすること
-    // 検索文字列にヒットしない場合は、-1を返すこと
-    /// </summary>
     [TestFixture]
     public class SearcherTest {
-        private static ISearchTarget MakeTestObject(string vText, string vSelectedText, int vSelectionStart, int vSelectionLength, bool vIsDistinguishCase) {
+        private static ISearchTarget MakeTestObject(string vText, string vSelectedText, int vSelectionStart, int vSelectionLength) {
             var wMock = new Mock<ISearchTarget>();
             wMock.Setup(x => x.Text).Returns(vText);
-            wMock.Setup(x => x.SelectedText).Returns(vSelectedText);
-            wMock.Setup(x => x.SelectionStart).Returns(vSelectionStart);
-            wMock.Setup(x => x.SelectionLength).Returns(vSelectionLength);
+            wMock.SetupProperty(x => x.SelectedText, vSelectedText);
+            wMock.SetupProperty(x => x.SelectionStart, vSelectionStart);
+            wMock.SetupProperty(x => x.SelectionLength, vSelectionLength);
+            wMock.Setup(x => x.Select(It.IsAny<int>(), It.IsAny<int>())).Callback((int vvSelectionStart, int vvSelectionLength) => {
+                wMock.Object.SelectionStart = vvSelectionStart;
+                wMock.Object.SelectionLength = vvSelectionLength;
+                wMock.Object.SelectedText = vText.Substring(vvSelectionStart, vvSelectionLength);
+            });
             return wMock.Object;
         }
 
@@ -32,9 +28,21 @@ namespace Test
         [TestCase(13, "test", "aaa\nbbtestbb\ttest", "test", 6, 4, false, Description = "search text is already selected")]
         [TestCase(-1, "テスト", "aaa\nbbtestbb\ttest", "test", 0, 0, false, Description = "not hit")]
         public void Test_SearchForwardShouldReturnFirstHitIndex(int vExpected, string vSearchText, string vText, string vSelectedText, int vSelectionStart, int vSelectionLength, bool vIsDistinguishCase) {
-            ISearcher wSearcher = new Searcher(MakeTestObject(vText, vSelectedText, vSelectionStart, vSelectionLength, vIsDistinguishCase));
+            ISearcher wSearcher = new Searcher(MakeTestObject(vText, vSelectedText, vSelectionStart, vSelectionLength));
             wSearcher.PrepareSearch(SearchArg.CreateSearch(vSearchText, vIsDistinguishCase));
             Assert.AreEqual(vExpected, wSearcher.SearchForward());
+        }
+        [Test]
+        public void Test_SearchForwardShouldReturnHitIndexes() {
+            var wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 0, 0);
+            ISearcher wSearcher = new Searcher(wSearchTarget);
+            wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
+            var wResults = new List<int>();
+            int wSearchCount = 2;
+            for (int i = 0; i < wSearchCount; ++i) {
+                wResults.Add(wSearcher.SearchForward());
+            }
+            Assert.AreEqual(new List<int> { 6, 13 }, wResults);
         }
         [TestCase(13, "test", "aaa\nbbtestbb\tTest", "", 16, 0, false, Description = "ignore case")]
         [TestCase(6, "test", "aaa\nbbtestbb\tTest", "", 16, 0, true, Description = "distinguish case")]
@@ -43,9 +51,21 @@ namespace Test
         [TestCase(6, "test", "aaa\nbbtestbb\ttest", "test", 14, 4, false, Description = "search text is already selected")]
         [TestCase(-1, "テスト", "aaa\nbbtestbb\ttest", "test", 16, 0, false, Description = "not hit")]
         public void Test_SearchBackwardShouldReturnFirstHitIndex(int vExpected, string vSearchText, string vText, string vSelectedText, int vSelectionStart, int vSelectionLength, bool vIsDistinguishCase) {
-            ISearcher wSearcher = new Searcher(MakeTestObject(vText, vSelectedText, vSelectionStart, vSelectionLength, vIsDistinguishCase));
+            ISearcher wSearcher = new Searcher(MakeTestObject(vText, vSelectedText, vSelectionStart, vSelectionLength));
             wSearcher.PrepareSearch(SearchArg.CreateSearch(vSearchText, vIsDistinguishCase));
             Assert.AreEqual(vExpected, wSearcher.SearchBackward());
+        }
+        [Test]
+        public void Test_SearchBackwardShouldReturnHitIndexes() {
+            var wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 16, 0);
+            ISearcher wSearcher = new Searcher(wSearchTarget);
+            wSearcher.PrepareSearch(SearchArg.CreateSearch("test", false));
+            var wResults = new List<int>();
+            int wSearchCount = 2;
+            for (int i = 0; i < wSearchCount; ++i) {
+                wResults.Add(wSearcher.SearchBackward());
+            }
+            Assert.AreEqual(new List<int> { 13, 6 }, wResults);
         }
     }
 }
