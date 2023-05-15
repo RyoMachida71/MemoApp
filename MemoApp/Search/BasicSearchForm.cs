@@ -3,29 +3,48 @@ using System.Windows.Forms;
 
 namespace MemoApp.Search {
     public partial class BasicSearchForm : Form {
-        protected ISearcher FSearcher;
+        private ISearcher FSearcher;
+        protected ISearchTarget FSearchTarget;
+        private Action<ISearcher> FDone;
+        protected ISearcher Searcher {
+            get {
+                if (FSearcher == null) {
+                    if (this.chbRegularExpression.Checked) FSearcher = new RegexSearcher(FSearchTarget);
+                    else FSearcher = new Searcher(FSearchTarget);
+                }
+                return FSearcher;
+            }
+        }
+
         /// <summary>
         /// Default constructor to make designer work properly
         /// </summary>
         public BasicSearchForm() {
             InitializeComponent();
         }
-        public BasicSearchForm(ISearcher vSearcher) {
+
+        public BasicSearchForm(ISearchTarget vSearchTarget, Action<ISearcher> vDone) {
             InitializeComponent();
-            FSearcher = vSearcher;
+            FSearchTarget = vSearchTarget;
+            FDone = vDone;
         }
+
         protected void RunSearch(Func<int> vSearch) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbDistinguishCase.Checked));
-            FSearcher.SearchAll();
+            Searcher.PrepareSearch(SearchArg.CreateSearch(this.tbxSearch.Text, this.chbDistinguishCase.Checked));
+            Searcher.SearchAll();
             vSearch();
+            FDone(Searcher);
             this.Close();
         }
+
         protected void RunReplace(Func<int> vReplace) {
-            this.FSearcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbDistinguishCase.Checked));
-            FSearcher.SearchAll();
+            Searcher.PrepareSearch(SearchArg.CreateReplace(this.tbxSearch.Text, this.tbxReplace.Text, this.chbDistinguishCase.Checked));
+            Searcher.SearchAll();
             vReplace();
+            FDone(Searcher);
             this.Close();
         }
+
         protected void btnClose_Click(object sender, EventArgs e) => this.Close();
 
         protected virtual void btnForward_Click(object sender, EventArgs e) {}

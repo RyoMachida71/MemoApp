@@ -1,7 +1,6 @@
 ﻿using MemoApp.Search;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace Test
 {
@@ -45,6 +44,7 @@ namespace Test
             }
             Assert.AreEqual(new int[] { 6, 13 }, wResults);
         }
+
         [TestCase(13, "test", "aaa\nbbtestbb\tTest", "", 16, 0, false, Description = "ignore case")]
         [TestCase(6, "test", "aaa\nbbtestbb\tTest", "", 16, 0, true, Description = "distinguish case")]
         [TestCase(9, "テスト", "\n\n\tテストこれはテスト", "", 11, 0, default, Description = "japanese")]
@@ -56,6 +56,7 @@ namespace Test
             wSearcher.PrepareSearch(SearchArg.CreateSearch(vSearchText, vIsDistinguishCase));
             Assert.AreEqual(vExpected, wSearcher.SearchBackward());
         }
+        
         [Test]
         public void Test_SearchBackwardShouldReturnHitIndexes() {
             var wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttest", "", 16, 0);
@@ -68,6 +69,7 @@ namespace Test
             }
             Assert.AreEqual(new int[] { 13, 6 }, wResults);
         }
+
         [Test]
         public void Test_SearchAllShouldReturnFirstSmallestIndexKeepingSelectionPosition() {
             ISearchTarget wSearchTarget = MakeTestObject("aaa\nbbtestbb\ttesttest", "", 10, 0);

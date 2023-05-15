@@ -6,24 +6,25 @@ namespace MemoApp.Search {
         ISearcher FSearcher;
         Mode FCurrentMode;
         public SearchController(ISearchTarget vSearchTarget) {
-            FSearcher = new Searcher(vSearchTarget);
+            FSearchTarget = vSearchTarget;
+        }
+        public void Update(ISearchTarget vSearchTarget) {
             FSearchTarget = vSearchTarget;
         }
         public void ShowSearchForm() {
-            var wForm = new SearchForm(FSearcher);
+            var wForm = new SearchForm(FSearchTarget, Done);
             FSearchTarget.KeyDown += Key_Down;
-            wForm.FormClosed += (s, e) => {
-                FCurrentMode = Mode.Search;
-            };
-            wForm.Show();
+            wForm.FormClosed += (s, e) => FCurrentMode = Mode.Search;
+            wForm.ShowDialog();
         }
         public void ShowReplaceForm() {
-            var wForm = new ReplaceForm(FSearcher);
+            var wForm = new ReplaceForm(FSearchTarget, Done);
             FSearchTarget.KeyDown += Key_Down;
-            wForm.FormClosed += (s, e) => {
-                FCurrentMode = Mode.Replace;
-            };
-            wForm.Show();
+            wForm.FormClosed += (s, e) => FCurrentMode = Mode.Replace;
+            wForm.ShowDialog();
+        }
+        private void Done(ISearcher vSearcher) {
+            FSearcher = vSearcher;
         }
         private void Key_Down(object sender, KeyEventArgs e) {
             switch (e.KeyCode) {

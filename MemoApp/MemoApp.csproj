@@ -88,6 +88,7 @@
     <Compile Include="Search\ISearcher.cs" />
     <Compile Include="Search\ISearchTarget.cs" />
     <Compile Include="Search\Mode.cs" />
+    <Compile Include="Search\RegexSearcher.cs" />
     <Compile Include="Search\ReplaceForm.cs">
       <SubType>Form</SubType>
     </Compile>

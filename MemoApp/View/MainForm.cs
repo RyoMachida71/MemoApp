@@ -104,10 +104,12 @@ namespace MemoApp {
 
         private void Search_Click(object sender, EventArgs e) {
             if (FSearchController == null) FSearchController = new SearchController(this.CurrentTextBox);
+            else FSearchController.Update(this.CurrentTextBox);
             FSearchController.ShowSearchForm();
         }
         private void Replace_Click(object sender, EventArgs e) {
             if (FSearchController == null) FSearchController = new SearchController(this.CurrentTextBox);
+            else FSearchController.Update(this.CurrentTextBox);
             FSearchController.ShowReplaceForm();
         }
 

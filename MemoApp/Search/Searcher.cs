@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace MemoApp.Search {
     public class Searcher : ISearcher {
         private ISearchTarget FSearchTarget;

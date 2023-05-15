@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace MemoApp.Search {
     public class SearchArg {
@@ -7,8 +6,8 @@ namespace MemoApp.Search {
         public string ReplaceText { get; private set; }
         public StringComparison StringComparison { get; private set; }
         private SearchArg(string vSearchText, string vReplaceText, bool vIsDistinguishCase) {
-            this.SearchText = vSearchText;
-            this.ReplaceText = vReplaceText;
+            this.SearchText = $@"{vSearchText}";
+            this.ReplaceText = $@"{vReplaceText}";
             this.StringComparison = vIsDistinguishCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
         }
         public static SearchArg CreateSearch(string vSearchText, bool vIsDistinguishCase) {
