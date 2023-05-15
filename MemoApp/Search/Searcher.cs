@@ -13,14 +13,14 @@ namespace MemoApp.Search {
             FArg = vArg;
         }
         public int SearchForward() {
-            var wOffset = FSearchTarget.SelectedText.Equals(FArg.SearchText, GetStringComparison(FArg.IsDistinguishCase)) ? 1 : 0;
-            var wSearchStartIndex = FSearchTarget.Text.IndexOf(FArg.SearchText, FSearchTarget.SelectionStart + wOffset, GetStringComparison(FArg.IsDistinguishCase));
+            var wOffset = FSearchTarget.SelectedText.Equals(FArg.SearchText, FArg.StringComparison) ? 1 : 0;
+            var wSearchStartIndex = FSearchTarget.Text.IndexOf(FArg.SearchText, FSearchTarget.SelectionStart + wOffset, FArg.StringComparison);
             if (wSearchStartIndex >= 0) FSearchTarget.Select(wSearchStartIndex, FArg.SearchText.Length);
             return wSearchStartIndex;
         }
 
         public int SearchBackward() {
-            var wIndex = FSearchTarget.Text.LastIndexOf(FArg.SearchText, FSearchTarget.SelectionStart, GetStringComparison(FArg.IsDistinguishCase));
+            var wIndex = FSearchTarget.Text.LastIndexOf(FArg.SearchText, FSearchTarget.SelectionStart, FArg.StringComparison);
             if (wIndex >= 0) FSearchTarget.Select(wIndex, FArg.SearchText.Length);
             return wIndex;
         }
@@ -64,7 +64,5 @@ namespace MemoApp.Search {
             FSearchTarget.Select(wOriginalPosition, 0);
             return wIndex;
         }
-
-        private StringComparison GetStringComparison(bool vIsDistinguishCase) => vIsDistinguishCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
     }
 }
