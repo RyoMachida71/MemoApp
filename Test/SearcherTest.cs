@@ -6,7 +6,7 @@ namespace Test
 {
     [TestFixture]
     public class SearcherTest {
-        private static ISearchTarget MakeTestObject(string vText, string vSelectedText, int vSelectionStart, int vSelectionLength) {
+        public static ISearchTarget MakeTestObject(string vText, string vSelectedText, int vSelectionStart, int vSelectionLength) {
             var wMock = new Mock<ISearchTarget>();
             wMock.Setup(x => x.Text).Returns(vText);
             wMock.SetupProperty(x => x.SelectedText, vSelectedText);
