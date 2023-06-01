@@ -112,7 +112,7 @@
             this.chbRegularExpression.Name = "chbRegularExpression";
             this.chbRegularExpression.Size = new System.Drawing.Size(72, 16);
             this.chbRegularExpression.TabIndex = 8;
-            this.chbRegularExpression.Text = "正規表現";
+            this.chbRegularExpression.Text = "正規表現(&R)";
             this.chbRegularExpression.UseVisualStyleBackColor = true;
             // 
             // chbDistinguishCase
@@ -122,7 +122,7 @@
             this.chbDistinguishCase.Name = "chbDistinguishCase";
             this.chbDistinguishCase.Size = new System.Drawing.Size(154, 16);
             this.chbDistinguishCase.TabIndex = 7;
-            this.chbDistinguishCase.Text = "大文字/小文字を区別する";
+            this.chbDistinguishCase.Text = "大文字/小文字を区別する(&D)";
             this.chbDistinguishCase.UseVisualStyleBackColor = true;
             // 
             // BasicSearchForm
