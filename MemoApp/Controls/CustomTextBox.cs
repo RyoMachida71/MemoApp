@@ -60,7 +60,6 @@ namespace MemoApp {
             this.SelectAll();
             this.SelectionBackColor = this.BackColor;
             this.Select(wOriginalPosition, 0);
-            this.SelectionBackColor = Color.Red;
         }
     }
 }

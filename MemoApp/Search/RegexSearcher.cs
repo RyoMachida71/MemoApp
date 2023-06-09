@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace MemoApp.Search {
     public class RegexSearcher : ISearcher {
         private ISearchTarget FSearchTarget;
         private SearchArg FArg;
-        private MatchCollection FMatches;
+        private List<Match> FMatches = new List<Match>();
 
         public RegexSearcher(ISearchTarget vSearchTarget) {
             FSearchTarget = vSearchTarget;
@@ -36,11 +36,12 @@ namespace MemoApp.Search {
 
         public int SearchAll() {
             var wOriginalPosition = FSearchTarget.SelectionStart;
-            FMatches = Regex.Matches(FSearchTarget.Text, FArg.SearchText, RegexOptions.Compiled | RegexOptions.Multiline);
-            foreach (Match wMatch in FMatches) {
+            var wMatches = Regex.Matches(FSearchTarget.Text, FArg.SearchText, RegexOptions.Compiled | RegexOptions.Multiline);
+            foreach (Match wMatch in wMatches) {
                 FSearchTarget.SelectionStart = wMatch.Index;
                 FSearchTarget.SelectionLength = wMatch.Length;
                 FSearchTarget.HighlightSelectedText();
+                FMatches.Add(wMatch);
             }
             FSearchTarget.SelectionStart = wOriginalPosition;
             return -1;
@@ -48,21 +49,27 @@ namespace MemoApp.Search {
 
         public int ReplaceForward() {
             var wIndex = this.SearchForward();
-            FSearchTarget.SelectedText = Regex.Unescape(FArg.ReplaceText);
+            if (wIndex >= 0) {
+                FSearchTarget.SelectedText = Regex.Unescape(FArg.ReplaceText);
+                FMatches.Remove(FMatches.Find(x => x.Index == wIndex));
+            }
             return wIndex;
         }
 
         public int ReplaceBackward() {
             var wIndex = this.SearchBackward();
             int wOriginalPosition = FSearchTarget.SelectionStart;
-            FSearchTarget.SelectedText = Regex.Unescape(FArg.ReplaceText);
+            if (wIndex >= 0) {
+                FSearchTarget.SelectedText = Regex.Unescape(FArg.ReplaceText);
+                FMatches.Remove(FMatches.Find(x => x.Index == wIndex));
+            }
             FSearchTarget.SelectionStart = wOriginalPosition;
             return wIndex;
         }
-
+        
         public int ReplaceAll() {
             var wOriginalPosition = FSearchTarget.SelectionStart;
-            int wIndex = FSearchTarget.SelectionStart = FSearchTarget.Text.Length - 1;
+            int wIndex = FSearchTarget.SelectionStart = FSearchTarget.Text.Length;
             while (wIndex >= 0) {
                 wIndex = this.ReplaceBackward();
             }
