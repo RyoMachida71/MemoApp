@@ -2,6 +2,9 @@
 using System.Text.RegularExpressions;
 
 namespace MemoApp.Search {
+    /// <summary>
+    /// In the middle of implementation
+    /// </summary>
     public class RegexSearcher : ISearcher {
         private ISearchTarget FSearchTarget;
         private SearchArg FArg;
