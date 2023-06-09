@@ -1,6 +1,5 @@
 ﻿using MemoApp.Search;
 using Microsoft.VisualBasic;
-using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -60,6 +59,11 @@ namespace MemoApp {
             this.SelectAll();
             this.SelectionBackColor = this.BackColor;
             this.Select(wOriginalPosition, 0);
+        }
+        public void JumpTo(int vLineNumber) {
+            if (vLineNumber <= 0 || vLineNumber > this.Lines.Length) return;
+            var wIndex = this.GetFirstCharIndexFromLine(vLineNumber - 1);
+            this.SelectionStart = wIndex;
         }
     }
 }

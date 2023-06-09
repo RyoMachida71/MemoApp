@@ -39,8 +39,11 @@ namespace MemoApp {
             this.コピーToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.貼り付けToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.全選択ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.LineNumberJumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.検索SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.検索ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.置換ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +57,6 @@ namespace MemoApp {
             this.UTF16MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UTF32MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShiftJISMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.tbcMemo.SuspendLayout();
             this.statusStripMemo.SuspendLayout();
@@ -143,7 +145,9 @@ namespace MemoApp {
             this.全選択ToolStripMenuItem,
             this.toolStripSeparator1,
             this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
+            this.redoToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.LineNumberJumpToolStripMenuItem});
             this.編集EToolStripMenuItem.Name = "編集EToolStripMenuItem";
             this.編集EToolStripMenuItem.Size = new System.Drawing.Size(57, 21);
             this.編集EToolStripMenuItem.Text = "編集(&E)";
@@ -152,43 +156,61 @@ namespace MemoApp {
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.ShortcutKeyDisplayString = "Ctrl+X";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItem1.Text = "切り取り";
             // 
             // コピーToolStripMenuItem
             // 
             this.コピーToolStripMenuItem.Name = "コピーToolStripMenuItem";
             this.コピーToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+C";
-            this.コピーToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.コピーToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.コピーToolStripMenuItem.Text = " コピー";
             // 
             // 貼り付けToolStripMenuItem
             // 
             this.貼り付けToolStripMenuItem.Name = "貼り付けToolStripMenuItem";
             this.貼り付けToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+V";
-            this.貼り付けToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.貼り付けToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.貼り付けToolStripMenuItem.Text = "貼り付け";
             // 
             // 全選択ToolStripMenuItem
             // 
             this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
             this.全選択ToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+A";
-            this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.全選択ToolStripMenuItem.Text = "全選択";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Z";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Y";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.redoToolStripMenuItem.Text = "Redo";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(184, 6);
+            // 
+            // LineNumberJumpToolStripMenuItem
+            // 
+            this.LineNumberJumpToolStripMenuItem.Name = "LineNumberJumpToolStripMenuItem";
+            this.LineNumberJumpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.LineNumberJumpToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.LineNumberJumpToolStripMenuItem.Text = "行番号ジャンプ";
+            this.LineNumberJumpToolStripMenuItem.Click += new System.EventHandler(this.LineNumberJumpToolStripMenuItem_Click);
             // 
             // 検索SToolStripMenuItem
             // 
@@ -204,7 +226,7 @@ namespace MemoApp {
             // 
             this.検索ToolStripMenuItem.Name = "検索ToolStripMenuItem";
             this.検索ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.検索ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.検索ToolStripMenuItem.Text = "検索";
             this.検索ToolStripMenuItem.Click += new System.EventHandler(this.Search_Click);
             // 
@@ -212,14 +234,14 @@ namespace MemoApp {
             // 
             this.置換ToolStripMenuItem.Name = "置換ToolStripMenuItem";
             this.置換ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.置換ToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.置換ToolStripMenuItem.Text = "置換";
             this.置換ToolStripMenuItem.Click += new System.EventHandler(this.Replace_Click);
             // 
             // grepToolStripMenuItem
             // 
             this.grepToolStripMenuItem.Name = "grepToolStripMenuItem";
-            this.grepToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.grepToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.grepToolStripMenuItem.Text = "grep(&G)";
             this.grepToolStripMenuItem.Click += new System.EventHandler(this.Grep_Click);
             // 
@@ -308,11 +330,6 @@ namespace MemoApp {
             this.ShiftJISMenuItem.Text = "日本語(Shift-JIS)";
             this.ShiftJISMenuItem.Click += new System.EventHandler(this.EncodingKind_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
             // Memo
             // 
             this.AllowDrop = true;
@@ -371,6 +388,8 @@ namespace MemoApp {
         private System.Windows.Forms.ToolStripMenuItem UTF32MenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShiftJISMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem LineNumberJumpToolStripMenuItem;
     }
 }
 

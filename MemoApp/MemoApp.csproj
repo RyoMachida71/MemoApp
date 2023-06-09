@@ -104,6 +104,12 @@
     <Compile Include="Search\SearchForm.Designer.cs">
       <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\LineNumberJumpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\LineNumberJumpForm.Designer.cs">
+      <DependentUpon>LineNumberJumpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Search\SearchForm.resx">
       <DependentUpon>SearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\LineNumberJumpForm.resx">
+      <DependentUpon>LineNumberJumpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

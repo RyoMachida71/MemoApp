@@ -2,6 +2,7 @@
 using MemoApp.Files;
 using MemoApp.Grep;
 using MemoApp.Search;
+using MemoApp.View;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -144,6 +145,12 @@ namespace MemoApp {
             var wSelectedEncoding = ((ToolStripMenuItem)sender).Tag as Encoding;
             this.CurrentFile.ReloadWith(wSelectedEncoding);
             this.CurrentTextBox.Text = this.CurrentFile.Text;
+        }
+
+        private void LineNumberJumpToolStripMenuItem_Click(object sender, EventArgs e) {
+            var wForm = new LineNumberJumpForm();
+            if (wForm.ShowDialog() != DialogResult.OK) return;
+            this.CurrentTextBox.JumpTo(wForm.LineNumber);
         }
     }
 }
