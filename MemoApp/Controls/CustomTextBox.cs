@@ -49,17 +49,75 @@ namespace MemoApp {
                 wMenuItem.Click += (s, e) => this.SelectedText = Strings.StrConv(this.SelectedText, VbStrConv.Narrow);
                 wPopupMenu.Items.Add(wMenuItem);
             }
+            {
+                wPopupMenu.Items.Add(new ToolStripSeparator());
+            }
+            {
+                var wMenuItem = new ToolStripMenuItem() { Text = "通常", ShortcutKeys = (Keys.Control | Keys.R) };
+                wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Regular);
+                wPopupMenu.Items.Add(wMenuItem);
+            }
+            {
+                var wMenuItem = new ToolStripMenuItem() { Text = "太字", ShortcutKeys = (Keys.Control | Keys.B) };
+                wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Bold);
+                wPopupMenu.Items.Add(wMenuItem);
+            }
+            {
+                var wMenuItem = new ToolStripMenuItem() { Text = "下線", ShortcutKeys = (Keys.Control | Keys.L) };
+                wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Underline);
+                wPopupMenu.Items.Add(wMenuItem);
+            }
+            {
+                var wMenuItem = new ToolStripMenuItem() { Text = "イタリック", ShortcutKeys = (Keys.Control | Keys.I) };
+                wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Italic);
+                wPopupMenu.Items.Add(wMenuItem);
+            }
+            {
+                var wMenuItem = new ToolStripMenuItem() { Text = "取り消し線", ShortcutKeys = (Keys.Control | Keys.E) };
+                wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Strikeout);
+                wPopupMenu.Items.Add(wMenuItem);
+            }
+            {
+                var wMenuItem = new ToolStripMenuItem() { Text = "すべて通常", ShortcutKeys = (Keys.Control | Keys.U) };
+                wMenuItem.Click += (s, e) => this.ToRegularFont();
+                wPopupMenu.Items.Add(wMenuItem);
+            }
             return wPopupMenu;
         }
+
+        private void ChangeFontStyle(FontStyle vStyle) {
+            if (this.SelectionFont.Style == vStyle || vStyle == FontStyle.Regular) {
+                this.SelectionFont = this.Font;
+                return;
+            }
+            this.SelectionFont = new Font(this.Font.FontFamily, this.Font.Size, SetFontStyle(vStyle));
+            this.SelectionStart = SelectionStart + SelectionLength;
+            this.SelectionLength = 0;
+            this.SelectionFont = this.Font;
+        }
+
+        private FontStyle SetFontStyle(FontStyle vStyle) => this.SelectionFont.Style == FontStyle.Regular ? vStyle : this.SelectionFont.Style | vStyle;
+
+        private void ToRegularFont() {
+            var wOriginalPosition = this.SelectionStart;
+            this.SelectAll();
+            this.SelectionFont = this.Font;
+            this.Select(wOriginalPosition, 0);
+        }
+
         public void HighlightSelectedText() {
             this.SelectionBackColor = Color.Red;
+            this.SelectionFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Bold);
         }
+
         void ISearchTarget.DeselectAll() {
             var wOriginalPosition = this.SelectionStart;
             this.SelectAll();
             this.SelectionBackColor = this.BackColor;
+            this.SelectionFont = this.Font;
             this.Select(wOriginalPosition, 0);
         }
+
         public void JumpTo(int vLineNumber) {
             if (vLineNumber <= 0 || vLineNumber > this.Lines.Length) return;
             var wIndex = this.GetFirstCharIndexFromLine(vLineNumber - 1);
