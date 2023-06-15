@@ -9,6 +9,7 @@ namespace MemoApp {
     [ToolboxItem(true)]
     public class CustomTextBox : RichTextBox, ISearchTarget {
         private const int C_LeftMargin = 4;
+        private const int C_CaretMoveDistance = 5;
         public CustomTextBox() {
             Initialize();
         }
@@ -118,10 +119,12 @@ namespace MemoApp {
             if (e.Modifiers == Keys.Control) {
                 switch (e.KeyCode) {
                     case Keys.Up:
-                        FastMoveCaret((int vCurrentLine) => Math.Max(0, vCurrentLine - 5));
+                        FastMoveCaret((int vCurrentLine) => Math.Max(0, vCurrentLine - C_CaretMoveDistance));
+                        e.Handled = true;
                         break;
                     case Keys.Down:
-                        FastMoveCaret((int vCurrentLine) => Math.Min(this.Lines.Length - 1, vCurrentLine + 5));
+                        FastMoveCaret((int vCurrentLine) => Math.Min(this.Lines.Length - 1, vCurrentLine + C_CaretMoveDistance));
+                        e.Handled = true;
                         break;
                 }
 
@@ -136,7 +139,7 @@ namespace MemoApp {
             if (wTargetIndex == -1) return;
 
             int wCurrentLineOffset = wCurrentCaret - this.GetFirstCharIndexFromLine(wCurrentLine);
-            int wNewCaretPosition = wTargetIndex + Math.Min(wCurrentLineOffset, this.Lines[wTargetLine].Length - 1);
+            int wNewCaretPosition = wTargetIndex + Math.Min(wCurrentLineOffset, this.Lines[wTargetLine].Length);
 
             this.SelectionStart = wNewCaretPosition;
             this.SelectionLength = 0;
