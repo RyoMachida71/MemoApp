@@ -53,7 +53,7 @@ namespace MemoApp {
                 wPopupMenu.Items.Add(new ToolStripSeparator());
             }
             {
-                var wMenuItem = new ToolStripMenuItem() { Text = "通常", ShortcutKeys = (Keys.Control | Keys.R) };
+                var wMenuItem = new ToolStripMenuItem() { Text = "通常", ShortcutKeys = (Keys.Control | Keys.U) };
                 wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Regular);
                 wPopupMenu.Items.Add(wMenuItem);
             }
@@ -77,11 +77,6 @@ namespace MemoApp {
                 wMenuItem.Click += (s, e) => this.ChangeFontStyle(FontStyle.Strikeout);
                 wPopupMenu.Items.Add(wMenuItem);
             }
-            {
-                var wMenuItem = new ToolStripMenuItem() { Text = "すべて通常", ShortcutKeys = (Keys.Control | Keys.U) };
-                wMenuItem.Click += (s, e) => this.ToRegularFont();
-                wPopupMenu.Items.Add(wMenuItem);
-            }
             return wPopupMenu;
         }
 
@@ -97,13 +92,6 @@ namespace MemoApp {
         }
 
         private FontStyle SetFontStyle(FontStyle vStyle) => this.SelectionFont.Style == FontStyle.Regular ? vStyle : this.SelectionFont.Style | vStyle;
-
-        private void ToRegularFont() {
-            var wOriginalPosition = this.SelectionStart;
-            this.SelectAll();
-            this.SelectionFont = this.Font;
-            this.Select(wOriginalPosition, 0);
-        }
 
         public void HighlightSelectedText() {
             this.SelectionBackColor = Color.Red;

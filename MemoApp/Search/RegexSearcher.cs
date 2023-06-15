@@ -8,7 +8,8 @@ namespace MemoApp.Search {
     public class RegexSearcher : ISearcher {
         private ISearchTarget FSearchTarget;
         private SearchArg FArg;
-        private List<Match> FMatches = new List<Match>();
+        private Regex FForwardSearcher;
+        private Regex FBackwardSearcher;
 
         public RegexSearcher(ISearchTarget vSearchTarget) {
             FSearchTarget = vSearchTarget;
@@ -16,45 +17,45 @@ namespace MemoApp.Search {
 
         public void PrepareSearch(SearchArg vArg) {
             FArg = vArg;
+            FForwardSearcher = new Regex(vArg.SearchText, RegexOptions.Compiled | RegexOptions.Multiline);
+            FBackwardSearcher = new Regex(vArg.SearchText, RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.RightToLeft);
         }
 
         public int SearchForward() {
-            foreach (Match wMatch in FMatches) {
-                if (wMatch.Index <= FSearchTarget.SelectionStart) continue;
-                FSearchTarget.Select(wMatch.Index, wMatch.Length);
-                return wMatch.Index;
-            }
-            return -1;
+            var wOffset = FSearchTarget.SelectionLength == 0 ? 0 : 1;
+            var wMatch = FForwardSearcher.Match(FSearchTarget.Text, FSearchTarget.SelectionStart + wOffset);
+            if (!wMatch.Success) return -1;
+            FSearchTarget.Select(wMatch.Index, wMatch.Length);
+            return wMatch.Index;
         }
 
         public int SearchBackward() {
-            for (int i = FMatches.Count - 1; i >= 0; --i) {
-                var wMatch = FMatches[i];
-                if (wMatch.Index >= FSearchTarget.SelectionStart) continue;
-                FSearchTarget.Select(wMatch.Index, wMatch.Length);
-                return wMatch.Index;
-            }
-            return -1;
+            var wMatch = InternalSearchBackward();
+            if (!wMatch.Success) return -1;
+            FSearchTarget.Select(wMatch.Index, wMatch.Length);
+            return wMatch.Index;
         }
+        private Match InternalSearchBackward() => FBackwardSearcher.Match(FSearchTarget.Text, FSearchTarget.SelectionStart);
 
         public int SearchAll() {
             var wOriginalPosition = FSearchTarget.SelectionStart;
-            var wMatches = Regex.Matches(FSearchTarget.Text, FArg.SearchText, RegexOptions.Compiled | RegexOptions.Multiline);
-            foreach (Match wMatch in wMatches) {
+            FSearchTarget.SelectionStart = FSearchTarget.Text.Length;
+            Match wMatch;
+            while (true) {
+                wMatch = InternalSearchBackward();
+                if (!wMatch.Success) break;
                 FSearchTarget.SelectionStart = wMatch.Index;
                 FSearchTarget.SelectionLength = wMatch.Length;
                 FSearchTarget.HighlightSelectedText();
-                FMatches.Add(wMatch);
             }
-            FSearchTarget.SelectionStart = wOriginalPosition;
-            return -1;
+            FSearchTarget.Select(wOriginalPosition, 0);
+            return wMatch.Index;
         }
 
         public int ReplaceForward() {
             var wIndex = this.SearchForward();
             if (wIndex >= 0) {
                 FSearchTarget.SelectedText = Regex.Unescape(FArg.ReplaceText);
-                FMatches.Remove(FMatches.Find(x => x.Index == wIndex));
             }
             return wIndex;
         }
@@ -64,7 +65,6 @@ namespace MemoApp.Search {
             int wOriginalPosition = FSearchTarget.SelectionStart;
             if (wIndex >= 0) {
                 FSearchTarget.SelectedText = Regex.Unescape(FArg.ReplaceText);
-                FMatches.Remove(FMatches.Find(x => x.Index == wIndex));
             }
             FSearchTarget.SelectionStart = wOriginalPosition;
             return wIndex;
