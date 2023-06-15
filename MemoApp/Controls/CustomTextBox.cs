@@ -1,5 +1,6 @@
 ﻿using MemoApp.Search;
 using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -26,6 +27,7 @@ namespace MemoApp {
             this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             this.SelectionIndent = C_LeftMargin;
             this.WordWrap = false;
+            this.KeyDown += TextBox_KeyDown;
         }
         private ContextMenuStrip CreatePopupMenu() {
             var wPopupMenu = new ContextMenuStrip();
@@ -110,6 +112,34 @@ namespace MemoApp {
             if (vLineNumber <= 0 || vLineNumber > this.Lines.Length) return;
             var wIndex = this.GetFirstCharIndexFromLine(vLineNumber - 1);
             this.SelectionStart = wIndex;
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e) {
+            if (e.Modifiers == Keys.Control) {
+                switch (e.KeyCode) {
+                    case Keys.Up:
+                        FastMoveCaret((int vCurrentLine) => Math.Max(0, vCurrentLine - 5));
+                        break;
+                    case Keys.Down:
+                        FastMoveCaret((int vCurrentLine) => Math.Min(this.Lines.Length - 1, vCurrentLine + 5));
+                        break;
+                }
+
+            }
+        }
+
+        private void FastMoveCaret(Func<int, int> vGetTargetLine) {
+            var wCurrentCaret = this.SelectionStart;
+            int wCurrentLine = this.GetLineFromCharIndex(wCurrentCaret);
+            int wTargetLine = vGetTargetLine(wCurrentLine);
+            int wTargetIndex = this.GetFirstCharIndexFromLine(wTargetLine);
+            if (wTargetIndex == -1) return;
+
+            int wCurrentLineOffset = wCurrentCaret - this.GetFirstCharIndexFromLine(wCurrentLine);
+            int wNewCaretPosition = wTargetIndex + Math.Min(wCurrentLineOffset, this.Lines[wTargetLine].Length - 1);
+
+            this.SelectionStart = wNewCaretPosition;
+            this.SelectionLength = 0;
         }
     }
 }
