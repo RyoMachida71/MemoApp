@@ -2,26 +2,25 @@
 using Microsoft.VisualBasic;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace MemoApp {
     [ToolboxItem(true)]
     public class CustomTextBox : RichTextBox, ISearchTarget {
-        private const int C_LeftMargin = 4;
         private const int C_CaretMoveDistance = 5;
-        public CustomTextBox() {
-            Initialize();
-        }
-        private void Initialize() {
+        private const int C_LeftMargin = 4;
+        public CustomTextBox() {}
+        public void Initialize() {
             this.AcceptsTab= true;
             this.AllowDrop = true;
             this.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = Color.Black;
             this.ContextMenuStrip = CreatePopupMenu();
             this.DetectUrls = true;
             this.Font = new Font("ＭＳ ゴシック", 10f);
-            this.ForeColor = System.Drawing.Color.White;
+            this.ForeColor = Color.White;
             this.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
             this.Multiline = true;
             this.Modified = false;
@@ -29,7 +28,10 @@ namespace MemoApp {
             this.SelectionIndent = C_LeftMargin;
             this.WordWrap = false;
             this.KeyDown += TextBox_KeyDown;
+            this.LinkClicked += Link_Clicked;
         }
+
+        #region PopupMenu
         private ContextMenuStrip CreatePopupMenu() {
             var wPopupMenu = new ContextMenuStrip();
             {
@@ -95,7 +97,11 @@ namespace MemoApp {
         }
 
         private FontStyle SetFontStyle(FontStyle vStyle) => this.SelectionFont.Style == FontStyle.Regular ? vStyle : this.SelectionFont.Style | vStyle;
+        #endregion
 
+        private void Link_Clicked(object sender, LinkClickedEventArgs e) {
+            Process.Start(e.LinkText);
+        }
         public void HighlightSelectedText() {
             this.SelectionBackColor = Color.Red;
             this.SelectionFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Bold);
@@ -139,9 +145,7 @@ namespace MemoApp {
             if (wTargetIndex == -1) return;
 
             int wCurrentLineOffset = wCurrentCaret - this.GetFirstCharIndexFromLine(wCurrentLine);
-            int wNewCaretPosition = wTargetIndex + Math.Min(wCurrentLineOffset, this.Lines[wTargetLine].Length);
-
-            this.SelectionStart = wNewCaretPosition;
+            this.SelectionStart = wTargetIndex + Math.Min(wCurrentLineOffset, this.Lines[wTargetLine].Length); ;
             this.SelectionLength = 0;
         }
     }

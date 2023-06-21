@@ -12,8 +12,10 @@ namespace MemoApp.Controls {
         public TextForm() {
             InitializeComponent();
             InitializeLineNumberTextBox();
+            TextBox.Initialize();
             AdjustSize();
             this.Dock = DockStyle.Fill;
+            this.BorderStyle = BorderStyle.FixedSingle;
             this.Resize += (s, e) => UpdateLineNumber();
             TextBox.TextChanged += (s, e) => UpdateLineNumber();
             TextBox.VScroll += (s, e) => UpdateLineNumber();
