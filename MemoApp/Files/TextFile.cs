@@ -28,20 +28,24 @@ namespace MemoApp.Files {
         });
 
         public Task LoadAsync() => Task.Run(() => {
+            var wSb = new StringBuilder();
             using (var wReader = new StreamReader(this.Path, this.Encoding)) {
                 while (!wReader.EndOfStream) {
-                    this.Text += wReader.ReadLine();
+                    wSb.AppendLine(wReader.ReadLine());
                 }
             }
+            this.Text = wSb.ToString();
         });
 
         public void ReloadWith(Encoding vEncoding) {
+            var wSb = new StringBuilder();
             using (var wReader = new StreamReader(this.Path, vEncoding)) {
                 this.Encoding = vEncoding;
                 while (!wReader.EndOfStream) {
-                    this.Text += wReader.ReadLine();
+                    wSb.AppendLine(wReader.ReadLine());
                 }
             }
+            this.Text = wSb.ToString();
         }
     }
 }

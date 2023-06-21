@@ -71,6 +71,14 @@ namespace MemoApp {
         private async void Open_Click(object sender, EventArgs e) {
             var wDialog = new OpenFileDialog() { Title = "開く", Filter = "テキストファイル|*.txt|すべてのファイル|*.*" };
             if (wDialog.ShowDialog() != DialogResult.OK) return;
+            foreach (TabPage wTab in this.tbcMemo.TabPages) {
+                var wExistingFile = ((TextForm)wTab.Tag).TextBox.Tag as IFile;
+                if (wExistingFile == null) continue;
+                if (wExistingFile.Path == wDialog.FileName) {
+                    MessageBox.Show(this, "選択されたファイルは既に開かれています。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
             IFile wFile = new TextFile(wDialog.FileName);
             await wFile.LoadAsync();
             if (this.ShouldSetFileToCurrentTab()) {

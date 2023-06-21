@@ -13,6 +13,7 @@ namespace MemoApp {
         private const int C_LeftMargin = 4;
         public CustomTextBox() {}
         public void Initialize() {
+            this.SelectionIndent = C_LeftMargin;
             this.AcceptsTab= true;
             this.AllowDrop = true;
             this.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
@@ -25,7 +26,6 @@ namespace MemoApp {
             this.Multiline = true;
             this.Modified = false;
             this.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
-            this.SelectionIndent = C_LeftMargin;
             this.WordWrap = false;
             this.KeyDown += TextBox_KeyDown;
             this.LinkClicked += Link_Clicked;
