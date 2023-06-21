@@ -1,5 +1,6 @@
 ﻿using MemoApp.Extentions;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -18,7 +19,7 @@ namespace MemoApp.Grep {
             FIsRegex = vIsRegex;
         }
         public string Run() {
-            var wResult = string.Empty;
+            var wResult = new StringBuilder();
             foreach (var wPath in Directory.EnumerateFiles(this.FolderPath, this.SearchFile, SearchOption.AllDirectories)) {
                 var wTextRows = File.ReadAllLines(wPath, EncodingDetecter.Detect(wPath));
                 foreach (var wTextRow in wTextRows) {
@@ -29,11 +30,11 @@ namespace MemoApp.Grep {
                     } else {
                         if (!this.HasSearchText(wTextRow)) continue;
                     }
-                    wResult += string.Format("{0}\t{1}\n", wPath, wTextRow);
+                    wResult.AppendFormat("{0}\t{1}\n", wPath, wTextRow);
                 }
             }
-            if (string.IsNullOrEmpty(wResult)) MessageBox.Show("検索文字列にヒットしませんでした。");
-            return wResult;
+            if (wResult.Length == 0) MessageBox.Show("検索文字列にヒットしませんでした。");
+            return wResult.ToString();
         }
         private bool HasSearchText(string vCurrentText) => FIsIgnoreCase ? vCurrentText.ContainsWithIgnoreCase(this.SearchText) : vCurrentText.Contains(this.SearchText);
     }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MemoApp.Controls {
     public partial class TextForm : UserControl {
         private const int EM_GETFIRSTVISIBLELINE = 0x00CE;
-        private const string C_DefaultLineNumber = "1" + "\n";
+        private const string C_DefaultLineNumber = "1";
         public RichTextBox LineNumberTextBox => this.rtbLineNumber;
         public CustomTextBox TextBox => this.customTextBox1;
         public TextForm() {
@@ -34,13 +35,15 @@ namespace MemoApp.Controls {
         }
         private void UpdateLineNumber() {
             LineNumberTextBox.Text = "";
-            if (TextBox.Text == "") LineNumberTextBox.Text = C_DefaultLineNumber;
-            for (int wLineNumber = GetTopVisibleLineNumber(); wLineNumber < TextBox.Lines.Length; ++wLineNumber) {
-                LineNumberTextBox.Text += (wLineNumber + 1).ToString() + "\n";
+            var wLineNumberText = new StringBuilder();
+            if (TextBox.Lines.Length == 0) wLineNumberText.AppendLine(C_DefaultLineNumber);
+            for (int wLineNumber = GetTopVisibleLineNumber(); wLineNumber <= TextBox.Lines.Length; ++wLineNumber) {
+                wLineNumberText.AppendLine(wLineNumber.ToString());
             }
+            LineNumberTextBox.Text = wLineNumberText.ToString();
         }
         private int GetTopVisibleLineNumber() {
-            return SendMessage(this.TextBox.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
+            return SendMessage(this.TextBox.Handle, EM_GETFIRSTVISIBLELINE, 0, 0) + 1;
         }
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
