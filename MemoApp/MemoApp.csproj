@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LineNumberTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LineNumberTextBox.Designer.cs">
+      <DependentUpon>LineNumberTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     <Compile Include="Controls\CustomTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Controls\LineNumberTextBox.resx">
+      <DependentUpon>LineNumberTextBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TextForm.resx">
       <DependentUpon>TextForm.cs</DependentUpon>
     </EmbeddedResource>
